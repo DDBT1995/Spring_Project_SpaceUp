@@ -1,0 +1,386 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    margin: 0;
+}
+
+.container {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+.tabs {
+    display: flex;
+    margin-bottom: 40px;
+    margin-top: 40px;
+}
+
+.tab {
+    padding: 10px 20px;
+    cursor: pointer;
+    border-bottom: 3px solid transparent; /* 기본 테두리 */
+    color: #555;
+}
+
+.tab.active {
+    border-bottom: 3px solid #36BC9B; /* 활성화된 탭 색상 */
+    color: #36BC9B;
+}
+/* 마이페이지 */
+.profile-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%; /* Ensure it takes full width */
+    margin-top: 150px;
+    gap: 0 5%;    
+}
+
+.profile-card {
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+    padding: 30px;
+    text-align: center;
+    width: 200px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+    position: sticky;
+    top: 70px;
+}
+
+.avatar {
+    width: 120px;
+    height: 120px;
+    border: 2px solid #e0e0e0;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.email {
+    font-size: 15px;
+    color:#a0a0a0;
+}
+
+.followers {
+    margin: 10px 0;
+}
+
+.edit-profile {
+    background-color: #36BC9B;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.edit-profile:hover {
+    background-color: #2c997e;
+}
+
+.upload-message {
+    margin: 20px 0;
+}
+
+.points-coupons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.menu {
+    width: 160px;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: left;
+}
+
+.menu h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.sideMenu {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.menu ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu ul li {
+    margin: 5px 0;
+}
+
+.menu hr {
+    border: 1px solid #ddd; /* 가로 구분선 */
+    margin: 5px 0 25px; /* 여백 조정 */
+    opacity: 0.5;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #555;
+    padding: 8px 12px;
+    display: block;
+    border-radius: 4px;
+}
+
+.menu a:hover {
+    color: #36BC9B;
+}
+
+.active {
+    color: #36BC9B; /* 활성화된 링크 색 */
+}
+
+.badge {
+    background-color: #f44336; /* 배지 색 */
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+}
+
+.reserv-container {
+    background-color: white;
+    padding: 20px;
+    width: 50%;
+}
+
+h1 {
+    margin: 0 0 20px;
+    font-size: 24px;
+    font-weight: 700;
+    color: rgb(27, 29, 31);
+    letter-spacing: -.3px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center; /* 중앙 정렬 */
+    margin-top: 70px; /* 상단 여백 */
+    padding: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+.pagination button {
+    padding: 10px 15px;
+    border: none;
+    background-color: #ffffff; /* 버튼 색상 */
+    color: rgb(173, 173, 173);
+    cursor: pointer;
+    margin: 0 5px; /* 버튼 간격 */
+}
+
+.pagination span {
+    align-self: center; /* 세로 중앙 정렬 */
+    margin: 0 10px; /* 여백 */
+}
+
+/* 마이페이지 끝 */
+
+/* 회원수정폼 */
+
+.btnReg {
+    font-size: 20px;
+    font-weight: bold;
+    padding: 12px;
+    background: #36BC9B;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    max-width: 300px;
+    width: 100%;
+    margin-top: 50px;
+}
+.btnReg:hover {
+    background: #2aa382;
+}
+.container {
+    width: 80%;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+.header, .section {
+    margin-bottom: 20px;
+}
+.title {
+    font-size: 24px;
+    font-weight: bold;
+}
+.sub-title {
+    color: gray;
+    margin-bottom: 20px;
+}
+.info-box {
+    display: flex;
+    justify-content: space-between;
+    border: none;
+    margin-bottom: 15px;
+}
+.info-box img {
+    max-width: 120px;
+    max-height: 80px;
+    border-radius: 10px;
+    margin-right: 30px;
+    margin-top: 15px;
+}
+.details {
+    width: 70%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+.details p {
+    margin: 5px 0;
+    justify-content: space-between;
+}
+.details_2 {
+    margin-left: 15px;
+    margin-top: 0;
+}
+.details_2 p {
+    display: flex;
+    justify-content: space-between;
+}
+.strong {
+    font-size: 16px;
+    color: #72787F;
+}
+.map {
+    width: 100%;
+    height: 300px;
+    background-color: #e0e0e0;
+    text-align: center;
+    line-height: 300px;
+}
+.price-info, .payment-info {
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
+}
+.footer {
+    font-size: 14px;
+    color: gray;
+    text-align: center;
+}
+.detailPage {
+    background: inherit;
+    padding: 0 20px 0 20px;
+    max-width: 700px;
+    width: 100%;
+}
+#addr {
+    font-size: 14px;
+    color: #72787F;
+}
+.info-box_2 {
+    padding: 10px;
+    border: none;
+    margin-bottom: 20px;
+}
+.returnInfo {
+    background: #f1f3f5;
+    padding: 10px;
+    padding-left: 40px;
+    padding-right: 40px;
+    border-radius: 10px;
+    max-width: 700px;
+    width: 100%;
+    margin-bottom: 40px;
+}
+#return {
+    white-space: pre-line;
+    font-size: 15px;
+    color: #555B5F;
+}
+#btnCancel {
+    border: 1px solid rgb(223 226 231);
+    border-radius: 10px;
+    background: inherit;
+    width: 160px;
+    height: 65px;
+    font-size: 18px;
+    color: #555B5F;
+    font-weight: bold;
+}
+.buttons {
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 700px;
+    width: 100%;
+    margin-bottom: 50px;
+    text-align: center;
+}
+.detailPage hr {
+    margin: 0;
+    color: #555B5F;
+    border-width: 2px 0 0 0;
+}
+#btnModi,
+#btnDel {
+    width: 50px;
+    height: 30px;
+    border: 1px solid #72787F;
+    border-radius: 5px;
+    background: white;
+}
+#qnaButton {
+    text-align: right;
+    align-items: center;
+}
+.comment-box {
+    display: none;
+    margin-top: 10px;
+}
+textarea {
+    max-width: 670px;
+    width: 100%;
+    height: 100px;
+    resize: none;
+    border-radius: 5px;
+    padding: 15px;
+    line-height: 1.4    
+}
+#btnSave {
+    width: 50px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    background: #36BC9B;
+    color: #fff;
+    margin: 5px 0;
+}
+.qna-regDate,
+.qna-answerCnt {
+    font-size: 14px;
+    color: #999;
+}
+.qna-body {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #555;
+}

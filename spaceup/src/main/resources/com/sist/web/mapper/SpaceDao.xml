@@ -1,0 +1,1237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC " -//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sist.web.dao.SpaceDao">
+
+	<resultMap type="com.sist.web.model.Space" id="spaceResultMap">
+        <id property="spaceId" column="SPACE_ID" />
+        <result property="hostEmail" column="HOST_EMAIL" />
+        <result property="hostNickname" column="HOST_NICKNAME" />
+        <result property="spaceType" column="SPACE_TYPE" />
+        <result property="spaceName" column="SPACE_NAME" />
+        <result property="spaceDesc" column="SPACE_DESC" />
+        <result property="spaceTip" column="SPACE_TIP" />
+        <result property="spaceParking" column="SPACE_PARKING" />
+        <result property="spaceMaxCapacity" column="SPACE_MAX_CAPACITY" />
+        <result property="spaceAddr" column="SPACE_ADDR" />
+        <result property="spaceAddrDesc" column="SPACE_ADDR_DESC" />
+        <result property="spaceCloseDay" column="SPACE_CLOSE_DAY" />
+        <result property="spaceNotice" column="SPACE_NOTICE" />
+        <result property="spaceCloseDayHost" column="SPACE_CLOSE_DAY_HOST" />
+        <result property="spaceStartTime" column="SPACE_START_TIME" />
+        <result property="spaceEndTime" column="SPACE_END_TIME" />
+        <result property="minReservationTime" column="MIN_RESERVATION_TIME" />
+        <result property="spaceHourlyRate" column="SPACE_HOURLY_RATE" />
+        <result property="status" column="STATUS" />
+        <result property="regDate" column="REG_DATE" />
+        <result property="modiDate" column="MODI_DATE" />
+        <result property="delDate" column="DEL_DATE" />
+        
+		<result property="reviewCnt" column="REVIEW_CNT" />
+		<result property="reviewScoreAvg" column="REVIEW_SCORE_AVG" />
+		<result property="spaceQuestionCnt" column="SPACE_QUESTION_CNT" />
+		<result column="SPACE_READ_CNT" property="spaceReadCnt" />
+		<result column="LIKEY_CNT" property="likeyCnt" />
+    </resultMap>
+    
+    <resultMap type="com.sist.web.model.Review" id="reviewResultMap">	    
+    	<!-- REVIEW 기본 정보 -->
+	    <id property="reviewId" column="REVIEW_ID" />
+	    <result property="guestEmail" column="GUEST_EMAIL" />
+	    <result property="guestNickname" column="GUEST_NICKNAME" />
+	    <result property="reservationId" column="RESERVATION_ID" />
+	    <result property="reviewScore" column="REVIEW_SCORE" />
+	    <result property="reviewContent" column="REVIEW_CONTENT" />
+	    <result property="status" column="STATUS" />
+	    <result property="regDate" column="REG_DATE" />
+	    <result property="modiDate" column="MODI_DATE" />
+	    <result property="delDate" column="DEL_DATE" />
+	    <result property="reviewLikeyCnt" column="REVIEW_LIKEY_CNT" />
+	
+		    <!-- REVIEW_REPLY 매핑 -->
+		    <association javaType="com.sist.web.model.ReviewReply" property="reviewReply">
+		        <id property="replyId" column="REPLY_ID" />
+		        <result property="reviewId" column="REVIEW_ID" />
+		        <result property="hostEmail" column="HOST_EMAIL" />
+		        <result property="hostNickname" column="HOST_NICKNAME" />
+		        <result property="replyContent" column="REPLY_CONTENT" />
+		        <result property="status" column="RVRE_STATUS" />
+		        <result property="regDate" column="RVRE_REG_DATE" />
+		        <result property="modiDate" column="RVRE_MODI_DATE" />
+		        <result property="delDate" column="RVRE_DEL_DATE" />
+		    </association>
+		    
+		    <association javaType="com.sist.web.model.ReviewLikey" property="reviewLikey">
+		        <result property="guestEmail" column="RVLK_GUEST_EMAIL" />
+		    	<result property="reviewId" column="RVLK_REVIEW_ID" />
+		    </association>
+	</resultMap>
+	
+	<resultMap type="com.sist.web.model.SpaceQuestion" id="qnaResultMap">
+	    <!-- SPACE_QUESTION 기본 정보 -->
+	    <id property="spaceQuestionId" column="SPACE_QUESTION_ID" />
+	    <result property="guestNickname" column="GUEST_NICKNAME" />
+	    <result property="guestEmail" column="GUEST_EMAIL" />
+	    <result property="spaceId" column="SPACE_ID" />
+	    <result property="questionContent" column="QUESTION_CONTENT" />
+	    <result property="questionCategory" column="QUESTION_CATEGORY" />
+	    <result property="status" column="STATUS" />
+	    <result property="regDate" column="REG_DATE" />
+	    <result property="modiDate" column="MODI_DATE" />
+	    <result property="delDate" column="DEL_DATE" />
+	
+	    <!-- SPACE_ANSWER 매핑 -->
+	    <association javaType="com.sist.web.model.SpaceAnswer" property="spaceAnswer">
+	        <id property="spaceAnswerId" column="SPACE_ANSWER_ID" />
+	        <result property="spaceQuestionId" column="SA_SPACE_QUESTION_ID" />
+	        <result property="hostNickname" column="HOST_NICKNAME" />
+	        <result property="hostEmail" column="HOST_EMAIL" />
+	        <result property="answerContent" column="ANSWER_CONTENT" />
+	        <result property="status" column="SA_STATUS" />
+	        <result property="regDate" column="SA_REG_DATE" />
+	        <result property="modiDate" column="SA_MODI_DATE" />
+	        <result property="delDate" column="SA_DEL_DATE" />
+	    </association>
+	</resultMap>
+	
+	<resultMap type="com.sist.web.model.Reservation" id="reservationResultMap">
+	    <id property="reservationId" column="RESERVATION_ID" />
+	    <result property="spaceId" column="SPACE_ID" />
+	    <result property="guestEmail" column="GUEST_EMAIL" />
+	    <result property="useDate" column="USE_DATE" />
+	    <result property="useStartTime" column="USE_START_TIME" />
+	    <result property="useEndTime" column="USE_END_TIME" />
+	    <result property="usePeople" column="USE_PEOPLE" />
+	    <result property="usePurpose" column="USE_PURPOSE" />
+	    <result property="status" column="STATUS" />
+	    <result property="regDate" column="REG_DATE" />
+	    <result property="delDate" column="DEL_DATE" />
+	</resultMap>
+    
+    <select id="spaceSelectByReservationId" parameterType="long" resultMap="spaceResultMap">
+	    SELECT 
+	        NVL(S.SPACE_ID, 0) AS SPACE_ID,
+	        NVL(S.HOST_EMAIL, '') AS HOST_EMAIL,
+	        NVL(S.SPACE_TYPE, 0) AS SPACE_TYPE,
+	        NVL(S.SPACE_NAME, '') AS SPACE_NAME,
+	        NVL(S.SPACE_DESC, '') AS SPACE_DESC,
+	        NVL(S.SPACE_TIP, '') AS SPACE_TIP,
+	        NVL(S.SPACE_PARKING, '') AS SPACE_PARKING,
+	        NVL(S.SPACE_MAX_CAPACITY, 0) AS SPACE_MAX_CAPACITY,
+	        NVL(S.SPACE_ADDR, '') AS SPACE_ADDR,
+	        NVL(S.SPACE_ADDR_DESC, '') AS SPACE_ADDR_DESC,
+	        NVL(S.SPACE_CLOSE_DAY, 0) AS SPACE_CLOSE_DAY,
+	        NVL(S.SPACE_NOTICE, '') AS SPACE_NOTICE,
+	        NVL(S.SPACE_CLOSE_DAY_HOST, '') AS SPACE_CLOSE_DAY_HOST,
+	        NVL(S.SPACE_START_TIME, 0) AS SPACE_START_TIME,
+	        NVL(S.SPACE_END_TIME, 0) AS SPACE_END_TIME,
+	        NVL(S.MIN_RESERVATION_TIME, 0) AS MIN_RESERVATION_TIME,
+	        NVL(S.SPACE_HOURLY_RATE, 0) AS SPACE_HOURLY_RATE,
+	        NVL(S.STATUS, '') AS STATUS,
+	        NVL(TO_CHAR(S.REG_DATE, 'YYYY.MM.DD HH24:MI:SS'), '') AS REG_DATE,
+	        NVL(TO_CHAR(S.MODI_DATE, 'YYYY.MM.DD HH24:MI:SS'), '') AS MODI_DATE,
+	        NVL(TO_CHAR(S.DEL_DATE, 'YYYY.MM.DD HH24:MI:SS'), '') AS DEL_DATE
+	    FROM 
+	        SPACE S
+	    WHERE 
+	        S.SPACE_ID IN (
+	            SELECT R.SPACE_ID
+	            FROM RESERVATION R
+	            WHERE R.RESERVATION_ID = #{value}
+	        )
+	</select>
+	
+	<select id="spaceSelectById" parameterType="long" resultMap="spaceResultMap">
+	    SELECT 
+	        NVL(SPACE_ID, 0) AS SPACE_ID,
+	        NVL(HOST_EMAIL, '') AS HOST_EMAIL,
+	        NVL(SPACE_TYPE, 0) AS SPACE_TYPE,
+	        NVL(SPACE_NAME, '') AS SPACE_NAME,
+	        NVL(SPACE_DESC, '') AS SPACE_DESC,
+	        NVL(SPACE_TIP, '') AS SPACE_TIP,
+	        NVL(SPACE_PARKING, '') AS SPACE_PARKING,
+	        NVL(SPACE_MAX_CAPACITY, 0) AS SPACE_MAX_CAPACITY,
+	        NVL(SPACE_ADDR, '') AS SPACE_ADDR,
+	        NVL(SPACE_ADDR_DESC, '') AS SPACE_ADDR_DESC,
+	        NVL(SPACE_CLOSE_DAY, 0) AS SPACE_CLOSE_DAY,
+	        NVL(SPACE_NOTICE, '') AS SPACE_NOTICE,
+	        NVL(SPACE_CLOSE_DAY_HOST, '') AS SPACE_CLOSE_DAY_HOST,
+	        NVL(SPACE_START_TIME, 0) AS SPACE_START_TIME,
+	        NVL(SPACE_END_TIME, 0) AS SPACE_END_TIME,
+	        NVL(MIN_RESERVATION_TIME, 0) AS MIN_RESERVATION_TIME,
+	        NVL(SPACE_HOURLY_RATE, 0) AS SPACE_HOURLY_RATE,
+	        NVL(STATUS, '') AS STATUS,
+	        NVL(TO_CHAR(REG_DATE, 'YYYY.MM.DD HH24:MI:SS'), '') AS REG_DATE,
+	        NVL(TO_CHAR(MODI_DATE, 'YYYY.MM.DD HH24:MI:SS'), '') AS MODI_DATE,
+	        NVL(TO_CHAR(DEL_DATE, 'YYYY.MM.DD HH24:MI:SS'), '') AS DEL_DATE
+	    FROM 
+	        SPACE
+	    WHERE 
+	        SPACE_ID = #{value}
+	</select>
+	
+	<select id="spaceView" parameterType="long" resultMap="spaceResultMap">
+ 		SELECT S.SPACE_ID
+			 , S.HOST_EMAIL
+	 		 , H.HOST_NICKNAME
+			 , SPACE_TYPE
+			 , SPACE_NAME
+			 , SPACE_DESC
+			 , SPACE_TIP
+			 , SPACE_PARKING
+			 , SPACE_MAX_CAPACITY
+			 , SPACE_ADDR
+			 , SPACE_ADDR_DESC
+			 , SPACE_CLOSE_DAY
+			 , SPACE_NOTICE
+			 , SPACE_CLOSE_DAY_HOST
+			 , SPACE_START_TIME
+			 , SPACE_END_TIME
+			 , MIN_RESERVATION_TIME
+			 , SPACE_HOURLY_RATE
+			 , S.STATUS
+			 , S.REG_DATE
+			 , S.MODI_DATE
+			 , S.DEL_DATE
+			 , NVL(REVIEW_CNT, 0) REVIEW_CNT
+			 , REVIEW_SCORE_AVG
+			 , NVL(SPACE_QUESTION_CNT, 0) SPACE_QUESTION_CNT
+		  FROM SPACE S, (SELECT SPACE_ID
+		 					  , COUNT(RV.REVIEW_ID) REVIEW_CNT
+							  , NVL(ROUND(AVG(RV.REVIEW_SCORE), 2), 0) REVIEW_SCORE_AVG
+						   FROM RESERVATION RE, REVIEW RV
+						  WHERE SPACE_ID = #{value}
+						    AND RE.RESERVATION_ID = RV.RESERVATION_ID
+						    AND RV.STATUS = 'Y'
+						  GROUP BY SPACE_ID) REVIEW
+					  , (SELECT SPACE_ID
+							  , COUNT(SPACE_QUESTION_ID) SPACE_QUESTION_CNT
+						   FROM SPACE_QUESTION
+						  WHERE STATUS = 'Y'
+						    AND SPACE_ID = #{value}
+						  GROUP BY SPACE_ID) SQ
+			 , HOST H
+		 WHERE S.SPACE_ID = #{value}
+		   AND S.SPACE_ID = SQ.SPACE_ID(+)
+		   AND S.SPACE_ID = REVIEW.SPACE_ID(+)
+		   AND S.HOST_EMAIL = H.HOST_EMAIL
+	</select>
+
+	<select id="spaceReview" parameterType="com.sist.web.model.Review" resultMap="reviewResultMap">
+		SELECT REVIEW_ID
+			 , GUEST_EMAIL
+			 , GUEST_NICKNAME
+			 , RESERVATION_ID
+			 , REVIEW_SCORE
+			 , REVIEW_CONTENT
+			 , STATUS
+			 , REG_DATE
+			 , MODI_DATE
+			 , DEL_DATE
+			 , REPLY_ID
+			 , HOST_EMAIL
+			 , HOST_NICKNAME
+			 , REPLY_CONTENT
+			 , RVRE_STATUS
+			 , RVRE_REG_DATE
+			 , RVRE_MODI_DATE
+			 , RVRE_DEL_DATE
+			 , REVIEW_LIKEY_CNT
+			 , RVLK_GUEST_EMAIL
+		  FROM (SELECT ROWNUM AS RNUM
+					 , RV_REVIEW_ID REVIEW_ID
+					 , GUEST_EMAIL
+					 , GUEST_NICKNAME
+					 , RESERVATION_ID
+					 , REVIEW_SCORE
+					 , REVIEW_CONTENT
+					 , STATUS
+					 , REG_DATE
+					 , MODI_DATE
+					 , DEL_DATE
+					 , REPLY_ID
+					 , HOST_EMAIL
+					 , HOST_NICKNAME
+					 , REPLY_CONTENT
+					 , RVRE_STATUS
+					 , RVRE_REG_DATE
+					 , RVRE_MODI_DATE
+					 , RVRE_DEL_DATE
+					 , REVIEW_LIKEY_CNT
+					 , RVLK_GUEST_EMAIL
+				  FROM (SELECT RV.REVIEW_ID RV_REVIEW_ID
+							 , RE.GUEST_EMAIL
+							 , G.GUEST_NICKNAME
+							 , RV.RESERVATION_ID
+							 , REVIEW_SCORE
+							 , REVIEW_CONTENT
+							 , RV.STATUS
+							 , TO_CHAR(RV.REG_DATE, 'YYYY-MM-DD') REG_DATE
+							 , TO_CHAR(RV.MODI_DATE, 'YYYY-MM-DD') MODI_DATE
+							 , TO_CHAR(RV.DEL_DATE, 'YYYY-MM-DD') DEL_DATE
+							 , RVRE.REPLY_ID
+							 , RVRE.REVIEW_ID
+							 , RVRE.HOST_EMAIL
+							 , RVRE.HOST_NICKNAME
+							 , RVRE.REPLY_CONTENT
+							 , RVRE.STATUS RVRE_STATUS
+							 , RVRE.REG_DATE RVRE_REG_DATE
+							 , RVRE.MODI_DATE RVRE_MODI_DATE
+							 , RVRE.DEL_DATE RVRE_DEL_DATE
+							 , NVL(RVLK_CNT.REVIEW_LIKEY_CNT, 0) REVIEW_LIKEY_CNT
+							 , RVLK.GUEST_EMAIL RVLK_GUEST_EMAIL
+						  FROM REVIEW RV, RESERVATION RE, GUEST G
+																 , (SELECT RVRE.REPLY_ID
+																		 , RVRE.REVIEW_ID
+																		 , RVRE.HOST_EMAIL
+																		 , H.HOST_NICKNAME
+																		 , RVRE.REPLY_CONTENT
+																		 , RVRE.STATUS
+																		 , TO_CHAR(RVRE.REG_DATE, 'YYYY-MM-DD') REG_DATE
+																		 , TO_CHAR(RVRE.MODI_DATE, 'YYYY-MM-DD') MODI_DATE
+																		 , TO_CHAR(RVRE.DEL_DATE, 'YYYY-MM-DD') DEL_DATE
+																	  FROM REVIEW_REPLY RVRE, HOST H
+																	 WHERE RVRE.HOST_EMAIL = H.HOST_EMAIL(+)) RVRE
+																 , (SELECT RVLK.REVIEW_ID, COUNT(RVLK.REVIEW_ID) REVIEW_LIKEY_CNT
+																	  FROM RESERVATION RE,REVIEW RV, REVIEW_LIKEY RVLK
+																	 WHERE RE.SPACE_ID = #{spaceId}
+																	   AND RE.RESERVATION_ID = RV.RESERVATION_ID
+																	   AND RV.REVIEW_ID = RVLK.REVIEW_ID
+																	 GROUP BY RVLK.REVIEW_ID) RVLK_CNT
+																 , (SELECT GUEST_EMAIL
+																		 , REVIEW_ID
+																	  FROM REVIEW_LIKEY
+																	 WHERE GUEST_EMAIL = #{guestEmail}) RVLK
+						 WHERE RE.SPACE_ID = #{spaceId}
+						   AND RV.RESERVATION_ID = RE.RESERVATION_ID
+						   AND RV.REVIEW_ID = RVRE.REVIEW_ID(+)
+						   AND RV.REVIEW_ID = RVLK_CNT.REVIEW_ID(+)
+						   AND RE.GUEST_EMAIL = G.GUEST_EMAIL(+)
+						   AND RV.REVIEW_ID = RVLK.REVIEW_ID(+)
+						   <choose>
+						   		<when test="reviewSort == 1">
+						   			ORDER BY REVIEW_LIKEY_CNT DESC
+						   		</when>
+						   		<when test="reviewSort == 2">
+						   			ORDER BY RV.REVIEW_ID DESC
+						   		</when>
+						   </choose>
+						 ))
+		 WHERE RNUM <![CDATA[>=]]> #{startRow}
+		   AND RNUM <![CDATA[<=]]> #{endRow}
+	</select>
+	
+	<select id="reviewTotalCnt" parameterType="long" resultType="long">
+		SELECT COUNT(RV.REVIEW_ID) REVIEW_TOTAL_CNT
+		  FROM RESERVATION RE, REVIEW RV
+		 WHERE RE.SPACE_ID = #{value}
+		   AND RE.RESERVATION_ID = RV.RESERVATION_ID
+	</select>
+	
+	<select id="reviewTotalCntY" parameterType="long" resultType="long">
+		SELECT COUNT(RV.REVIEW_ID) REVIEW_TOTAL_CNT
+		  FROM RESERVATION RE, REVIEW RV
+		 WHERE RE.SPACE_ID = #{value}
+		   AND RV.STATUS = 'Y'
+		   AND RE.RESERVATION_ID = RV.RESERVATION_ID
+	</select>
+	
+	<update id="reviewReport" parameterType="hashmap">
+		INSERT INTO REVIEW_REPORT (REVIEW_REPORT_ID, REVIEW_ID, REPORTER_ID, REPORTER_TYPE, REPORT_REASON, REPORT_DATE, STATUS)
+		VALUES (SEQ_REVIEW_REPORT_ID.NEXTVAL, #{reviewId}, #{reporterId}, #{reporterType}, #{reportReason} , SYSDATE, 'W')
+	</update>
+	
+	<select id="spaceSelect" parameterType="long" resultMap="spaceResultMap">
+		SELECT SPACE_ID
+			 , HOST_EMAIL
+			 , SPACE_TYPE
+			 , SPACE_NAME
+			 , SPACE_DESC
+			 , SPACE_TIP
+			 , SPACE_PARKING
+			 , SPACE_MAX_CAPACITY
+			 , SPACE_ADDR
+			 , SPACE_ADDR_DESC
+			 , SPACE_CLOSE_DAY
+			 , SPACE_NOTICE
+			 , SPACE_CLOSE_DAY_HOST
+			 , SPACE_START_TIME
+			 , SPACE_END_TIME
+			 , MIN_RESERVATION_TIME
+			 , SPACE_HOURLY_RATE, STATUS
+			 , REG_DATE
+			 , MODI_DATE
+			 , DEL_DATE
+		  FROM SPACE
+		 WHERE SPACE_ID = #{value}
+	</select>
+	
+	<select id="reviewSelect" parameterType="long" resultMap="reviewResultMap">
+		SELECT RV.REVIEW_ID
+			 , RV.RESERVATION_ID
+			 , RV.REVIEW_SCORE
+			 , RV.REVIEW_CONTENT
+			 , RV.STATUS
+			 , RV.REG_DATE
+			 , RV.MODI_DATE
+			 , RV.DEL_DATE
+			 , RE.GUEST_EMAIL
+		  FROM REVIEW RV, RESERVATION RE
+		 WHERE RV.REVIEW_ID = #{value}
+		   AND RV.RESERVATION_ID = RE.RESERVATION_ID
+	</select>
+	
+	<update id="reviewUpdate" parameterType="com.sist.web.model.Review">
+		UPDATE REVIEW
+		   SET REVIEW_CONTENT = #{reviewContent}
+		   	 , REVIEW_SCORE = #{reviewScore}
+		     , MODI_DATE = SYSDATE
+		 WHERE REVIEW_ID = #{reviewId}
+	</update>
+	
+	<update id="reviewDelete" parameterType="long">
+		UPDATE REVIEW
+		   SET STATUS = 'N'
+		 WHERE REVIEW_ID = #{value}
+	</update>
+	
+	<select id="spaceQuestionList" parameterType="com.sist.web.model.SpaceQuestion" resultMap="qnaResultMap">
+		SELECT SPACE_QUESTION_ID
+			 , GUEST_NICKNAME
+			 , GUEST_EMAIL
+			 , SPACE_ID
+			 , QUESTION_CONTENT
+			 , QUESTION_CATEGORY
+			 , STATUS
+			 , REG_DATE
+			 , MODI_DATE
+			 , DEL_DATE
+			 , SPACE_ANSWER_ID
+			 , SA_SPACE_QUESTION_ID
+			 , HOST_NICKNAME
+			 , HOST_EMAIL
+			 , ANSWER_CONTENT
+			 , SA_STATUS
+			 , SA_REG_DATE
+			 , SA_MODI_DATE
+			 , SA_DEL_DATE
+		  FROM (SELECT ROWNUM AS RNUM
+					 , SPACE_QUESTION_ID
+					 , GUEST_NICKNAME
+					 , GUEST_EMAIL
+					 , SPACE_ID
+					 , QUESTION_CONTENT
+					 , QUESTION_CATEGORY
+					 , STATUS
+					 , REG_DATE
+					 , MODI_DATE
+					 , DEL_DATE
+					 , SPACE_ANSWER_ID
+					 , SA_SPACE_QUESTION_ID
+					 , HOST_NICKNAME
+					 , HOST_EMAIL
+					 , ANSWER_CONTENT
+					 , SA_STATUS
+					 , SA_REG_DATE
+					 , SA_MODI_DATE
+					 , SA_DEL_DATE
+				  FROM (SELECT SQ.SPACE_QUESTION_ID
+							 , G.GUEST_NICKNAME
+							 , SQ.GUEST_EMAIL
+							 , SQ.SPACE_ID
+							 , SQ.QUESTION_CONTENT
+							 , SQ.QUESTION_CATEGORY
+							 , SQ.STATUS
+							 , SQ.REG_DATE
+							 , SQ.MODI_DATE
+							 , SQ.DEL_DATE
+							 , SA.SPACE_ANSWER_ID
+							 , SA.SPACE_QUESTION_ID SA_SPACE_QUESTION_ID
+							 , H.HOST_NICKNAME
+							 , SA.HOST_EMAIL
+							 , SA.ANSWER_CONTENT
+							 , SA.STATUS SA_STATUS
+							 , SA.REG_DATE SA_REG_DATE
+							 , SA.MODI_DATE SA_MODI_DATE
+							 , SA.DEL_DATE SA_DEL_DATE
+						  FROM SPACE_QUESTION SQ, SPACE_ANSWER SA, GUEST G, HOST H
+						 WHERE SQ.SPACE_ID = #{spaceId}
+						   AND SQ.SPACE_QUESTION_ID = SA.SPACE_QUESTION_ID(+)
+						   AND SQ.GUEST_EMAIL = G.GUEST_EMAIL
+						   AND SA.HOST_EMAIL = H.HOST_EMAIL(+)
+						 ORDER BY SQ.SPACE_QUESTION_ID DESC))
+ WHERE RNUM <![CDATA[>=]]> #{startRow}
+   AND RNUM <![CDATA[<=]]> #{endRow}
+	</select>
+	
+	<select id="spaceQuestionTotalCnt" parameterType="long" resultType="long">
+		SELECT COUNT(SPACE_QUESTION_ID)
+		  FROM SPACE_QUESTION
+		 WHERE SPACE_ID = #{value}
+	</select>
+	
+	<select id="spaceQuestionTotalCntY" parameterType="long" resultType="long">
+		SELECT COUNT(SPACE_QUESTION_ID)
+		  FROM SPACE_QUESTION
+		 WHERE SPACE_ID = #{value}
+		   AND STATUS = 'Y'
+	</select>
+	
+	<insert id="questionInsert" parameterType="com.sist.web.model.SpaceQuestion">
+		INSERT INTO SPACE_QUESTION (SPACE_QUESTION_ID, GUEST_EMAIL, SPACE_ID, QUESTION_CONTENT, QUESTION_CATEGORY, STATUS, REG_DATE, MODI_DATE, DEL_DATE)
+		VALUES (SEQ_SPACE_QUESTION_ID.NEXTVAL, #{guestEmail}, #{spaceId}, #{questionContent}, #{questionCategory}, 'Y', SYSDATE, NULL, NULL)
+	</insert>
+	
+	<update id="questionUpdate" parameterType="com.sist.web.model.SpaceQuestion">
+		UPDATE SPACE_QUESTION
+		   SET QUESTION_CONTENT = #{questionContent}
+		     , QUESTION_CATEGORY = #{questionCategory}
+		     , MODI_DATE = SYSDATE
+		 WHERE SPACE_QUESTION_ID = #{spaceQuestionId}
+	</update>
+	
+	<update id="questionDelete" parameterType="long">
+		UPDATE SPACE_QUESTION
+		   SET STATUS = 'N'
+		 WHERE SPACE_QUESTION_ID = #{value}
+	</update>
+	
+	<select id="questionUserSelect" parameterType="com.sist.web.model.SpaceQuestion" resultType="int">
+		SELECT COUNT(SPACE_QUESTION_ID)
+		  FROM SPACE_QUESTION
+		 WHERE SPACE_QUESTION_ID = #{spaceQuestionId}
+		   AND GUEST_EMAIL = #{guestEmail}
+	</select>
+	
+	<select id="reviewLikeySelect" parameterType="com.sist.web.model.ReviewLikey" resultType="int">
+		SELECT COUNT(REVIEW_ID)
+		  FROM REVIEW_LIKEY
+		 WHERE REVIEW_ID = #{reviewId}
+		   AND GUEST_EMAIL = #{guestEmail}
+	</select>
+
+	<insert id="reviewLikeyInsert" parameterType="com.sist.web.model.ReviewLikey">
+		INSERT INTO REVIEW_LIKEY(REVIEW_ID, GUEST_EMAIL)
+		VALUES (#{reviewId}, #{guestEmail})
+	</insert>
+
+	<delete id="reviewLikeyDelete" parameterType="com.sist.web.model.ReviewLikey">
+		DELETE REVIEW_LIKEY
+		 WHERE REVIEW_ID = #{reviewId}
+		   AND GUEST_EMAIL = #{guestEmail}
+	</delete>
+	
+	<select id="reservationSelect" parameterType="com.sist.web.model.Reservation" resultMap="reservationResultMap">
+		SELECT RESERVATION_ID
+			 , SPACE_ID
+			 , GUEST_EMAIL
+			 , USE_DATE
+			 , USE_START_TIME
+			 , USE_END_TIME
+			 , USE_PEOPLE
+			 , USE_PURPOSE
+			 , STATUS
+			 , REG_DATE
+			 , DEL_DATE
+		  FROM RESERVATION
+		 WHERE SPACE_ID = #{spaceId}
+		   AND USE_DATE = #{useDate}
+		   AND STATUS = 'P'
+		 ORDER BY USE_START_TIME ASC
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 베스트 공간 리스트 -->
+	<select id="bestSpaceList" parameterType="com.sist.web.model.Space" resultMap="spaceResultMap">
+		SELECT SPACE_ID,
+		       HOST_EMAIL,
+		       SPACE_TYPE,
+		       SPACE_NAME,
+		       SPACE_DESC,
+		       SPACE_TIP,
+		       SPACE_PARKING,
+		       SPACE_MAX_CAPACITY,
+		       SPACE_ADDR,
+		       SPACE_ADDR_DESC,
+		       SPACE_CLOSE_DAY,
+		       SPACE_NOTICE,
+		       SPACE_CLOSE_DAY_HOST,
+		       SPACE_START_TIME,
+		       SPACE_END_TIME,
+		       MIN_RESERVATION_TIME,
+		       SPACE_HOURLY_RATE,
+		       STATUS,
+		       REG_DATE,
+		       MODI_DATE, 
+		       DEL_DATE,
+		       LIKEY_CNT,
+		       REVIEW_CNT,
+		       SPACE_READ_CNT,
+		       REVIEW_SCORE_AVG
+		      FROM(SELECT ROWNUM RNUM,
+		           SPACE_ID,
+		           HOST_EMAIL,
+		           SPACE_TYPE,
+		           SPACE_NAME,
+		           SPACE_DESC,
+		           SPACE_TIP,
+		           SPACE_PARKING,
+		           SPACE_MAX_CAPACITY,
+		           SPACE_ADDR,
+		           SPACE_ADDR_DESC,
+		           SPACE_CLOSE_DAY,
+		           SPACE_NOTICE,
+		           SPACE_CLOSE_DAY_HOST,
+		           SPACE_START_TIME,
+		           SPACE_END_TIME,
+		           MIN_RESERVATION_TIME,
+		           SPACE_HOURLY_RATE,
+		           STATUS,
+		           REG_DATE,
+		           MODI_DATE, 
+		           DEL_DATE, 
+		           LIKEY_CNT,
+		           REVIEW_CNT,
+		           SPACE_READ_CNT,
+		           REVIEW_SCORE_AVG
+		      FROM(SELECT   A.SPACE_ID,
+		                    A.HOST_EMAIL,
+		                    A.SPACE_TYPE,
+		                    A.SPACE_NAME,
+		                    A.SPACE_DESC,
+		                    A.SPACE_TIP,
+		                    A.SPACE_PARKING,
+		                    A.SPACE_MAX_CAPACITY,
+		                    A.SPACE_ADDR,
+		                    A.SPACE_ADDR_DESC,
+		                    A.SPACE_CLOSE_DAY,
+		                    A.SPACE_NOTICE,
+		                    A.SPACE_CLOSE_DAY_HOST,
+		                    A.SPACE_START_TIME,
+		                    A.SPACE_END_TIME,
+		                    A.MIN_RESERVATION_TIME,
+		                    A.SPACE_HOURLY_RATE,
+		                    A.STATUS,
+		                    TO_CHAR(A.REG_DATE, 'YYYY.MM.DD HH24:MI:SS') REG_DATE,
+		                    NVL(TO_CHAR(A.MODI_DATE, 'YYYY.MM.DD HH24:MI:SS'), '') MODI_DATE,
+		                    NVL(TO_CHAR(A.DEL_DATE, 'YYYY.MM.DD HH24:MI:SS'), '') DEL_DATE,
+		                    NVL(B.LIKEY_CNT, 0) LIKEY_CNT,
+		                    NVL(C.REVIEW_CNT, 0) REVIEW_CNT,
+		                    NVL(F.RESERVATION_CNT, 0) RESERVATION_CNT,
+		                    A.SPACE_READ_CNT,
+		                    C.REVIEW_SCORE_AVG
+		                FROM SPACE A,(SELECT SPACE_ID, COUNT(SPACE_ID) LIKEY_CNT 
+		                                FROM SPACE_LIKEY 
+		                            GROUP BY SPACE_ID) B,(SELECT C.SPACE_ID, COUNT(D.REVIEW_ID) REVIEW_CNT, AVG(D.REVIEW_SCORE) REVIEW_SCORE_AVG
+		                                                   FROM RESERVATION C, REVIEW D
+		                                                   WHERE C.RESERVATION_ID = D.RESERVATION_ID
+		                                                GROUP BY C.SPACE_ID) C ,(SELECT SPACE_ID, COUNT(SPACE_ID) RESERVATION_CNT
+		                                                                        FROM RESERVATION
+		                                                                    GROUP BY SPACE_ID) F
+		                 WHERE 1 = 1
+		                 AND A.SPACE_ID = B.SPACE_ID(+)
+		                 AND A.SPACE_ID = C.SPACE_ID(+)
+		                 AND A.SPACE_ID = F.SPACE_ID(+)
+		                 AND A.STATUS = 'Y'
+		                 ORDER BY RESERVATION_CNT DESC, A.REG_DATE DESC, A.SPACE_ID DESC))
+		WHERE RNUM BETWEEN 1 AND 10
+			</select>
+			
+			<!-- 최신 공간 리스트 -->
+			<select id="newSpaceList" parameterType="com.sist.web.model.Space" resultMap="spaceResultMap">
+			SELECT SPACE_ID,
+		       HOST_EMAIL,
+		       SPACE_TYPE,
+		       SPACE_NAME,
+		       SPACE_DESC,
+		       SPACE_TIP,
+		       SPACE_PARKING,
+		       SPACE_MAX_CAPACITY,
+		       SPACE_ADDR,
+		       SPACE_ADDR_DESC,
+		       SPACE_CLOSE_DAY,
+		       SPACE_NOTICE,
+		       SPACE_CLOSE_DAY_HOST,
+		       SPACE_START_TIME,
+		       SPACE_END_TIME,
+		       MIN_RESERVATION_TIME,
+		       SPACE_HOURLY_RATE,
+		       STATUS,
+		       REG_DATE,
+		       MODI_DATE, 
+		       DEL_DATE,
+		       LIKEY_CNT,
+		       REVIEW_CNT,
+		       SPACE_READ_CNT,
+		       REVIEW_SCORE_AVG
+		      FROM(SELECT ROWNUM RNUM,
+		           SPACE_ID,
+		           HOST_EMAIL,
+		           SPACE_TYPE,
+		           SPACE_NAME,
+		           SPACE_DESC,
+		           SPACE_TIP,
+		           SPACE_PARKING,
+		           SPACE_MAX_CAPACITY,
+		           SPACE_ADDR,
+		           SPACE_ADDR_DESC,
+		           SPACE_CLOSE_DAY,
+		           SPACE_NOTICE,
+		           SPACE_CLOSE_DAY_HOST,
+		           SPACE_START_TIME,
+		           SPACE_END_TIME,
+		           MIN_RESERVATION_TIME,
+		           SPACE_HOURLY_RATE,
+		           STATUS,
+		           REG_DATE,
+		           MODI_DATE, 
+		           DEL_DATE, 
+		           LIKEY_CNT,
+		           REVIEW_CNT,
+		           SPACE_READ_CNT,
+		           REVIEW_SCORE_AVG
+		      FROM(SELECT   A.SPACE_ID,
+		                    A.HOST_EMAIL,
+		                    A.SPACE_TYPE,
+		                    A.SPACE_NAME,
+		                    A.SPACE_DESC,
+		                    A.SPACE_TIP,
+		                    A.SPACE_PARKING,
+		                    A.SPACE_MAX_CAPACITY,
+		                    A.SPACE_ADDR,
+		                    A.SPACE_ADDR_DESC,
+		                    A.SPACE_CLOSE_DAY,
+		                    A.SPACE_NOTICE,
+		                    A.SPACE_CLOSE_DAY_HOST,
+		                    A.SPACE_START_TIME,
+		                    A.SPACE_END_TIME,
+		                    A.MIN_RESERVATION_TIME,
+		                    A.SPACE_HOURLY_RATE,
+		                    A.STATUS,
+		                    TO_CHAR(A.REG_DATE, 'YYYY.MM.DD HH24:MI:SS') REG_DATE,
+		                    NVL(TO_CHAR(A.MODI_DATE, 'YYYY.MM.DD HH24:MI:SS'), '') MODI_DATE,
+		                    NVL(TO_CHAR(A.DEL_DATE, 'YYYY.MM.DD HH24:MI:SS'), '') DEL_DATE,
+		                    NVL(B.LIKEY_CNT, 0) LIKEY_CNT,
+		                    NVL(C.REVIEW_CNT, 0) REVIEW_CNT,
+		                    A.SPACE_READ_CNT,
+		                    C.REVIEW_SCORE_AVG
+		                FROM SPACE A,(SELECT SPACE_ID, COUNT(SPACE_ID) LIKEY_CNT 
+		                                FROM SPACE_LIKEY 
+		                            GROUP BY SPACE_ID) B,(SELECT C.SPACE_ID, COUNT(D.REVIEW_ID) REVIEW_CNT, AVG(D.REVIEW_SCORE) REVIEW_SCORE_AVG
+		                                                   FROM RESERVATION C, REVIEW D
+		                                                   WHERE C.RESERVATION_ID = D.RESERVATION_ID
+		                                                GROUP BY C.SPACE_ID) C
+		                 WHERE A.SPACE_ID = B.SPACE_ID(+)
+		                 AND A.SPACE_ID = C.SPACE_ID(+)
+		                 AND A.STATUS = 'Y'
+		                 ORDER BY A.REG_DATE DESC, A.SPACE_ID DESC))
+		WHERE RNUM BETWEEN 1 AND 6
+			</select>
+			
+			<!-- 라이키 공간 리스트 -->
+			<select id="likeySpaceList" parameterType="com.sist.web.model.Space" resultMap="spaceResultMap">
+			SELECT SPACE_ID,
+		       HOST_EMAIL,
+		       SPACE_TYPE,
+		       SPACE_NAME,
+		       SPACE_DESC,
+		       SPACE_TIP,
+		       SPACE_PARKING,
+		       SPACE_MAX_CAPACITY,
+		       SPACE_ADDR,
+		       SPACE_ADDR_DESC,
+		       SPACE_CLOSE_DAY,
+		       SPACE_NOTICE,
+		       SPACE_CLOSE_DAY_HOST,
+		       SPACE_START_TIME,
+		       SPACE_END_TIME,
+		       MIN_RESERVATION_TIME,
+		       SPACE_HOURLY_RATE,
+		       STATUS,
+		       REG_DATE,
+		       MODI_DATE, 
+		       DEL_DATE,
+		       LIKEY_CNT,
+		       REVIEW_CNT,
+		       SPACE_READ_CNT,
+		       REVIEW_SCORE_AVG
+		      FROM(SELECT ROWNUM RNUM,
+		           SPACE_ID,
+		           HOST_EMAIL,
+		           SPACE_TYPE,
+		           SPACE_NAME,
+		           SPACE_DESC,
+		           SPACE_TIP,
+		           SPACE_PARKING,
+		           SPACE_MAX_CAPACITY,
+		           SPACE_ADDR,
+		           SPACE_ADDR_DESC,
+		           SPACE_CLOSE_DAY,
+		           SPACE_NOTICE,
+		           SPACE_CLOSE_DAY_HOST,
+		           SPACE_START_TIME,
+		           SPACE_END_TIME,
+		           MIN_RESERVATION_TIME,
+		           SPACE_HOURLY_RATE,
+		           STATUS,
+		           REG_DATE,
+		           MODI_DATE, 
+		           DEL_DATE, 
+		           LIKEY_CNT,
+		           REVIEW_CNT,
+		           SPACE_READ_CNT,
+		           REVIEW_SCORE_AVG
+		      FROM(SELECT   A.SPACE_ID,
+		                    A.HOST_EMAIL,
+		                    A.SPACE_TYPE,
+		                    A.SPACE_NAME,
+		                    A.SPACE_DESC,
+		                    A.SPACE_TIP,
+		                    A.SPACE_PARKING,
+		                    A.SPACE_MAX_CAPACITY,
+		                    A.SPACE_ADDR,
+		                    A.SPACE_ADDR_DESC,
+		                    A.SPACE_CLOSE_DAY,
+		                    A.SPACE_NOTICE,
+		                    A.SPACE_CLOSE_DAY_HOST,
+		                    A.SPACE_START_TIME,
+		                    A.SPACE_END_TIME,
+		                    A.MIN_RESERVATION_TIME,
+		                    A.SPACE_HOURLY_RATE,
+		                    A.STATUS,
+		                    TO_CHAR(A.REG_DATE, 'YYYY.MM.DD HH24:MI:SS') REG_DATE,
+		                    NVL(TO_CHAR(A.MODI_DATE, 'YYYY.MM.DD HH24:MI:SS'), '') MODI_DATE,
+		                    NVL(TO_CHAR(A.DEL_DATE, 'YYYY.MM.DD HH24:MI:SS'), '') DEL_DATE,
+		                    NVL(B.LIKEY_CNT, 0) LIKEY_CNT,
+		                    NVL(C.REVIEW_CNT, 0) REVIEW_CNT,
+		                    A.SPACE_READ_CNT,
+		                    C.REVIEW_SCORE_AVG
+		                FROM SPACE A,(SELECT SPACE_ID, COUNT(SPACE_ID) LIKEY_CNT 
+		                                FROM SPACE_LIKEY 
+		                            GROUP BY SPACE_ID) B,(SELECT C.SPACE_ID, COUNT(D.REVIEW_ID) REVIEW_CNT, AVG(D.REVIEW_SCORE) REVIEW_SCORE_AVG
+		                                                   FROM RESERVATION C, REVIEW D
+		                                                   WHERE C.RESERVATION_ID = D.RESERVATION_ID
+		                                                GROUP BY C.SPACE_ID) C
+		                 WHERE A.SPACE_ID = B.SPACE_ID(+)
+		                 AND A.SPACE_ID = C.SPACE_ID(+)
+		                 AND A.STATUS = 'Y'
+		                 ORDER BY LIKEY_CNT DESC, A.REG_DATE DESC, A.SPACE_ID DESC))
+		WHERE RNUM BETWEEN 1 AND 10
+			</select>
+			
+			<!-- 공간 리스트 -->
+			<select id="spaceList" parameterType="com.sist.web.model.Space" resultMap="spaceResultMap">
+			SELECT SPACE_ID,
+		           HOST_EMAIL,
+		           SPACE_TYPE,
+		           SPACE_NAME,
+		           SPACE_DESC,
+		           SPACE_TIP,
+		           SPACE_PARKING,
+		           SPACE_MAX_CAPACITY,
+		           SPACE_ADDR,
+		           SPACE_ADDR_DESC,
+		           SPACE_CLOSE_DAY,
+		           SPACE_NOTICE,
+		           SPACE_CLOSE_DAY_HOST,
+		           SPACE_START_TIME,
+		           SPACE_END_TIME,
+		           MIN_RESERVATION_TIME,
+		           SPACE_HOURLY_RATE,
+		           STATUS,          
+		           REG_DATE,
+		           MODI_DATE,
+		           DEL_DATE,
+		           SPACE_READ_CNT,
+		           LIKEY_CNT,
+		           REVIEW_SCORE_AVG,
+		           REVIEW_CNT,
+		           RESERVATION_CNT
+		    FROM (
+		        SELECT ROWNUM RNUM,
+		               SPACE_ID,
+		               HOST_EMAIL,
+		               SPACE_TYPE,
+		               SPACE_NAME,
+		               SPACE_DESC,
+		               SPACE_TIP,
+		               SPACE_PARKING,
+		               SPACE_MAX_CAPACITY,
+		               SPACE_ADDR,
+		               SPACE_ADDR_DESC,
+		               SPACE_CLOSE_DAY,
+		               SPACE_NOTICE,
+		               SPACE_CLOSE_DAY_HOST,
+		               SPACE_START_TIME,
+		               SPACE_END_TIME,
+		               MIN_RESERVATION_TIME,
+		               SPACE_HOURLY_RATE,
+		               STATUS,
+		               REG_DATE,
+		               MODI_DATE,
+		               DEL_DATE,
+		               SPACE_READ_CNT,
+		               LIKEY_CNT,
+		               REVIEW_SCORE_AVG,
+		               REVIEW_CNT,
+		               RESERVATION_CNT
+		        FROM (
+		            SELECT A.SPACE_ID,
+		                   A.HOST_EMAIL,
+		                   A.SPACE_TYPE,
+		                   A.SPACE_NAME,
+		                   A.SPACE_DESC,
+		                   A.SPACE_TIP,
+		                   A.SPACE_PARKING,
+		                   A.SPACE_MAX_CAPACITY,
+		                   A.SPACE_ADDR,
+		                   A.SPACE_ADDR_DESC,
+		                   A.SPACE_CLOSE_DAY,
+		                   A.SPACE_NOTICE,
+		                   NVL(A.SPACE_CLOSE_DAY_HOST, ' ') SPACE_CLOSE_DAY_HOST,
+		                   A.SPACE_START_TIME,
+		                   A.SPACE_END_TIME,
+		                   A.MIN_RESERVATION_TIME,
+		                   A.SPACE_HOURLY_RATE,
+		                   A.STATUS,                
+		                   A.REG_DATE,
+		                   NVL(TO_CHAR(A.MODI_DATE, 'YYYY.MM.DD HH24:MI:SS'), '') MODI_DATE,
+		                   NVL(TO_CHAR(A.DEL_DATE, 'YYYY.MM.DD HH24:MI:SS'), '') DEL_DATE,
+		                   NVL(A.SPACE_READ_CNT, 0) SPACE_READ_CNT,
+		                   NVL(B.LIKEY_CNT, 0) LIKEY_CNT,
+		                   NVL(C.REVIEW_SCORE_AVG, 0.0) REVIEW_SCORE_AVG,                     
+		                   NVL(D.REVIEW_CNT, 0) REVIEW_CNT,                    
+		                   NVL(E.RESERVATION_CNT, 0) RESERVATION_CNT
+		            FROM SPACE A, (SELECT SPACE_ID, COUNT(SPACE_ID) LIKEY_CNT 
+		                           FROM SPACE_LIKEY 
+		                           GROUP BY SPACE_ID) B,(SELECT SPACE_ID, COUNT(B.REVIEW_ID) REVIEW_CNT,                                        
+		                                                 NVL(ROUND(AVG(B.REVIEW_SCORE), 2), 0) REVIEW_SCORE_AVG
+		                                                 FROM RESERVATION A, REVIEW B
+		                                                 WHERE A.RESERVATION_ID = B.RESERVATION_ID
+		                                                 GROUP BY SPACE_ID) C,(SELECT A.SPACE_ID, COUNT(B.REVIEW_ID) REVIEW_CNT
+		                                                                     FROM RESERVATION A, REVIEW B
+		                                                                     WHERE A.RESERVATION_ID = B.RESERVATION_ID
+		                                                                     GROUP BY A.SPACE_ID) D,(SELECT SPACE_ID, COUNT(SPACE_ID) RESERVATION_CNT
+		                                                                                              FROM RESERVATION
+		                                                                                              GROUP BY SPACE_ID) E   
+		                                                                    
+		            WHERE A.SPACE_ID = B.SPACE_ID(+)
+		            AND  A.SPACE_ID = C.SPACE_ID(+)
+		            AND A.SPACE_ID = D.SPACE_ID(+)
+		            AND A.SPACE_ID = E.SPACE_ID(+)
+		            AND A.STATUS = 'Y'
+		
+		  
+		           
+		                <if test="spaceType != null and spaceType != ''">
+		                    AND SPACE_TYPE = #{spaceType}
+		                </if>
+		                <if test="spaceAddr != null and spaceAddr != ''">
+		                    AND SPACE_ADDR LIKE '%' || #{spaceAddr} || '%'
+		                </if>
+		                <if test="spaceMaxCapacity != null and spaceMaxCapacity != ''">
+		                    AND SPACE_MAX_CAPACITY <![CDATA[>=]]> #{spaceMaxCapacity}
+		                </if>
+		                <if test="regDate != null and regDate != ''">
+		                    AND REG_DATE <![CDATA[<=]]> TO_DATE(#{regDate}, 'YYYY-MM-DD')
+		                </if>
+		                <if test="spaceName != null and spaceName != ''">
+		                    AND SPACE_NAME LIKE '%' || #{spaceName} || '%'
+		                </if>
+		                
+		                
+		                  <if test="reservationWeek != null and reservationWeek != ''">
+					        AND NOT (
+					            (#{reservationWeek} IN ('토', '일') AND SPACE_CLOSE_DAY = 2)
+					
+					            OR (#{reservationWeek} NOT IN ('토', '일') AND SPACE_CLOSE_DAY = 3)
+					
+					            OR (SPACE_CLOSE_DAY = 4 AND INSTR(SPACE_CLOSE_DAY_HOST, #{reservationWeek}) > 0)
+					        )
+					    </if>
+		                
+		                                                
+		                <if test='spaceSort != null and spaceSort != ""'>
+						<choose>
+						  <when test='spaceSort == "1"'>
+			               ORDER BY REG_DATE DESC, SPACE_ID DESC
+			              </when>
+			              <when test='spaceSort == "2"'>  
+			              ORDER BY RESERVATION_CNT DESC, REG_DATE DESC, SPACE_ID DESC
+			              </when>  
+			              <when test='spaceSort == "3"'>
+			               ORDER BY SPACE_HOURLY_RATE ASC, REG_DATE DESC, SPACE_ID DESC
+			              </when>  
+			              <when test='spaceSort == "4"'>
+			                ORDER BY SPACE_HOURLY_RATE DESC, REG_DATE DESC, SPACE_ID DESC
+			              </when>  
+			              <when test='spaceSort == "5"'>
+			                ORDER BY SPACE_READ_CNT DESC, REG_DATE DESC, SPACE_ID DESC
+			              </when>  
+			              <when test='spaceSort == "6"'>
+			                ORDER BY REVIEW_CNT DESC, REG_DATE DESC, SPACE_ID DESC
+			              </when>  
+			              <when test='spaceSort == "7"'>
+			                ORDER BY REVIEW_SCORE_AVG DESC, REG_DATE DESC, SPACE_ID DESC
+			              </when> 
+			            </choose>
+						</if>	        
+		                                       
+		           )
+		   )
+		   WHERE RNUM <![CDATA[>=]]> 1
+		   AND RNUM <![CDATA[<=]]> 6
+			</select>
+			
+			<select id="spaceListMore" parameterType="com.sist.web.model.Space" resultMap="spaceResultMap">
+		  SELECT   SPACE_ID,
+		           HOST_EMAIL,
+		           SPACE_TYPE,
+		           SPACE_NAME,
+		           SPACE_DESC,
+		           SPACE_TIP,
+		           SPACE_PARKING,
+		           SPACE_MAX_CAPACITY,
+		           SPACE_ADDR,
+		           SPACE_ADDR_DESC,
+		           SPACE_CLOSE_DAY,
+		           SPACE_NOTICE,
+		           SPACE_CLOSE_DAY_HOST,
+		           SPACE_START_TIME,
+		           SPACE_END_TIME,
+		           MIN_RESERVATION_TIME,
+		           SPACE_HOURLY_RATE,
+		           STATUS,          
+		           REG_DATE,
+		           MODI_DATE,
+		           DEL_DATE,
+		           SPACE_READ_CNT,
+		           LIKEY_CNT,
+		           REVIEW_SCORE_AVG,
+		           REVIEW_CNT,
+		           RESERVATION_CNT
+		    FROM (
+		        SELECT ROWNUM RNUM,
+		               SPACE_ID,
+		               HOST_EMAIL,
+		               SPACE_TYPE,
+		               SPACE_NAME,
+		               SPACE_DESC,
+		               SPACE_TIP,
+		               SPACE_PARKING,
+		               SPACE_MAX_CAPACITY,
+		               SPACE_ADDR,
+		               SPACE_ADDR_DESC,
+		               SPACE_CLOSE_DAY,
+		               SPACE_NOTICE,
+		               SPACE_CLOSE_DAY_HOST,
+		               SPACE_START_TIME,
+		               SPACE_END_TIME,
+		               MIN_RESERVATION_TIME,
+		               SPACE_HOURLY_RATE,
+		               STATUS,
+		               REG_DATE,
+		               MODI_DATE,
+		               DEL_DATE,
+		               SPACE_READ_CNT,
+		               LIKEY_CNT,
+		               REVIEW_SCORE_AVG,
+		               REVIEW_CNT,
+		               RESERVATION_CNT
+		        FROM (
+		            SELECT A.SPACE_ID,
+		                   A.HOST_EMAIL,
+		                   A.SPACE_TYPE,
+		                   A.SPACE_NAME,
+		                   A.SPACE_DESC,
+		                   A.SPACE_TIP,
+		                   A.SPACE_PARKING,
+		                   A.SPACE_MAX_CAPACITY,
+		                   A.SPACE_ADDR,
+		                   A.SPACE_ADDR_DESC,
+		                   A.SPACE_CLOSE_DAY,
+		                   A.SPACE_NOTICE,
+		                   NVL(A.SPACE_CLOSE_DAY_HOST, ' ') SPACE_CLOSE_DAY_HOST,
+		                   A.SPACE_START_TIME,
+		                   A.SPACE_END_TIME,
+		                   A.MIN_RESERVATION_TIME,
+		                   A.SPACE_HOURLY_RATE,
+		                   A.STATUS,                
+		                   A.REG_DATE,
+		                   NVL(TO_CHAR(A.MODI_DATE, 'YYYY.MM.DD HH24:MI:SS'), '') MODI_DATE,
+		                   NVL(TO_CHAR(A.DEL_DATE, 'YYYY.MM.DD HH24:MI:SS'), '') DEL_DATE,
+		                   NVL(A.SPACE_READ_CNT, 0) SPACE_READ_CNT,
+		                   NVL(B.LIKEY_CNT, 0) LIKEY_CNT,
+		                   NVL(C.REVIEW_SCORE_AVG, 0.0) REVIEW_SCORE_AVG,                     
+		                   NVL(D.REVIEW_CNT, 0) REVIEW_CNT,                    
+		                   NVL(E.RESERVATION_CNT, 0) RESERVATION_CNT
+		            FROM SPACE A, (SELECT SPACE_ID, COUNT(SPACE_ID) LIKEY_CNT 
+		                           FROM SPACE_LIKEY 
+		                           GROUP BY SPACE_ID) B,(SELECT SPACE_ID, COUNT(B.REVIEW_ID) REVIEW_CNT,                                        
+		                                                 NVL(ROUND(AVG(B.REVIEW_SCORE), 2), 0) REVIEW_SCORE_AVG
+		                                                 FROM RESERVATION A, REVIEW B
+		                                                 WHERE A.RESERVATION_ID = B.RESERVATION_ID
+		                                                 GROUP BY SPACE_ID) C,(SELECT A.SPACE_ID, COUNT(B.REVIEW_ID) REVIEW_CNT
+		                                                                     FROM RESERVATION A, REVIEW B
+		                                                                     WHERE A.RESERVATION_ID = B.RESERVATION_ID
+		                                                                     GROUP BY A.SPACE_ID) D,(SELECT SPACE_ID, COUNT(SPACE_ID) RESERVATION_CNT
+		                                                                                              FROM RESERVATION
+		                                                                                              GROUP BY SPACE_ID) E   
+		                                                                    
+		            WHERE A.SPACE_ID = B.SPACE_ID(+)
+		            AND  A.SPACE_ID = C.SPACE_ID(+)
+		            AND A.SPACE_ID = D.SPACE_ID(+)
+		            AND A.SPACE_ID = E.SPACE_ID(+)
+		            AND A.STATUS = 'Y'
+		                     
+				   		<if test="spaceType != null and spaceType != ''">
+		                    AND SPACE_TYPE = #{spaceType}
+		                </if>
+		                <if test="spaceAddr != null and spaceAddr != ''">
+		                    AND SPACE_ADDR LIKE '%' || #{spaceAddr} || '%'
+		                </if>
+		                <if test="spaceMaxCapacity != null and spaceMaxCapacity != ''">
+		                    AND SPACE_MAX_CAPACITY <![CDATA[>=]]> #{spaceMaxCapacity}
+		                </if>
+		                <if test="spaceName != null and spaceName != ''">
+		                    AND SPACE_NAME LIKE '%' || #{spaceName} || '%'
+		                </if>
+		                <if test="regDate != null and regDate != ''">
+		                    AND REG_DATE <![CDATA[<=]]> TO_DATE(#{regDate}, 'YYYY-MM-DD')
+		                </if>
+		                
+		                <if test="reservationWeek != null and reservationWeek != ''">
+					        AND NOT (
+					            (#{reservationWeek} IN ('토', '일') AND SPACE_CLOSE_DAY = 2)
+					
+					            OR (#{reservationWeek} NOT IN ('토', '일') AND SPACE_CLOSE_DAY = 3)
+					
+					            OR (SPACE_CLOSE_DAY = 4 AND INSTR(SPACE_CLOSE_DAY_HOST, #{reservationWeek}) > 0)
+					        )
+					    </if>
+		                
+		             <if test='spaceSort != null and spaceSort != ""'>
+						<choose>
+						  <when test='spaceSort == "1"'>
+			               ORDER BY REG_DATE DESC, SPACE_ID DESC
+			              </when>
+			              <when test='spaceSort == "2"'>  
+			              ORDER BY RESERVATION_CNT DESC, REG_DATE DESC, SPACE_ID DESC
+			              </when>  
+			              <when test='spaceSort == "3"'>
+			               ORDER BY SPACE_HOURLY_RATE ASC, REG_DATE DESC, SPACE_ID DESC
+			              </when>  
+			              <when test='spaceSort == "4"'>
+			                ORDER BY SPACE_HOURLY_RATE DESC, REG_DATE DESC, SPACE_ID DESC
+			              </when>  
+			              <when test='spaceSort == "5"'>
+			                ORDER BY SPACE_READ_CNT DESC, REG_DATE DESC, SPACE_ID DESC
+			              </when>  
+			              <when test='spaceSort == "6"'>
+			                ORDER BY REVIEW_CNT DESC, REG_DATE DESC, SPACE_ID DESC
+			              </when>  
+			              <when test='spaceSort == "7"'>
+			                ORDER BY REVIEW_SCORE_AVG DESC, REG_DATE DESC, SPACE_ID DESC
+			              </when> 
+			            </choose>
+						</if>	                      
+		        )
+		    )   
+		    WHERE RNUM <![CDATA[<=]]> #{offset} + #{limit}
+		</select>
+			
+		<insert id="spaceLikey" parameterType="map">
+		   
+			    INSERT INTO SPACE_LIKEY(
+			    GUEST_EMAIL,
+			    SPACE_ID
+			) 
+			VALUES (
+			    #{guestEmail},
+			    #{spaceId}
+			)
+		</insert>	
+		
+		<select id="spaceLikeyCheck" parameterType="map" resultType="int">
+			SELECT COUNT(C.GUEST_EMAIL) CNT
+		  	  FROM GUEST A, SPACE B, SPACE_LIKEY C
+		     WHERE A.GUEST_EMAIL = C.GUEST_EMAIL
+		       AND B.SPACE_ID = C.SPACE_ID
+		       AND C.GUEST_EMAIL =  #{guestEmail}
+		       AND C.SPACE_ID = #{spaceId}
+		</select>
+		
+		<delete id="spaceLikeyDel" parameterType="map">
+			DELETE FROM SPACE_LIKEY
+			WHERE GUEST_EMAIL = #{guestEmail}
+			AND SPACE_ID = #{spaceId}
+		</delete>
+		
+		<!-- 게시물 조회 수 증가 -->
+	<update id="spaceReadCntPlus" parameterType="long">		
+		UPDATE SPACE
+		   SET SPACE_READ_CNT = SPACE_READ_CNT + 1
+		 WHERE SPACE_ID = #{value}
+	</update>
+	
+	<select id="spaceListCount" parameterType="com.sist.web.model.Space" resultType="int">
+	    SELECT COUNT(SPACE_ID)
+	      FROM SPACE
+	     WHERE 1 = 1
+	       AND STATUS = 'Y' 
+	    <if test="spaceType != null and spaceType != ''">
+	    	AND SPACE_TYPE = #{spaceType}
+		</if>
+		<if test="spaceAddr != null and spaceAddr != ''">
+		    AND SPACE_ADDR LIKE '%' || #{spaceAddr} || '%'
+		</if>
+		<if test="spaceMaxCapacity != null and spaceMaxCapacity != ''">
+		    AND SPACE_MAX_CAPACITY <![CDATA[>=]]> #{spaceMaxCapacity}
+		</if>
+		<if test="spaceName != null and spaceName != ''">
+            AND SPACE_NAME LIKE '%' || #{spaceName} || '%'
+		</if>
+		<if test="regDate != null and regDate != ''">
+		    AND REG_DATE <![CDATA[<=]]> TO_DATE(#{regDate}, 'YYYY-MM-DD')
+		</if>
+		<if test="reservationWeek != null and reservationWeek != ''">
+		    AND NOT (
+		        (#{reservationWeek} IN ('토', '일') AND SPACE_CLOSE_DAY = 2)
+		
+		        OR (#{reservationWeek} NOT IN ('토', '일') AND SPACE_CLOSE_DAY = 3)
+		
+		        OR (SPACE_CLOSE_DAY = 4 AND INSTR(SPACE_CLOSE_DAY_HOST, #{reservationWeek}) > 0)
+		    )
+		</if>
+	</select>
+	
+	
+</mapper>

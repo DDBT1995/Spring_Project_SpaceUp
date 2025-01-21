@@ -1,0 +1,248 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    margin: 0;
+}
+
+.container {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+.tabs {
+    display: flex;
+    margin-bottom: 40px;
+    margin-top: 40px;
+}
+
+.tab {
+    padding: 10px 20px;
+    cursor: pointer;
+    border-bottom: 3px solid transparent; /* 기본 테두리 */
+    color: #555;
+}
+
+.tab.active {
+    border-bottom: 3px solid #36BC9B; /* 활성화된 탭 색상 */
+    color: #36BC9B;
+}
+/* 마이페이지 */
+.profile-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%; /* Ensure it takes full width */
+    margin-top: 150px;
+    gap: 0 5%;    
+}
+
+.profile-card {
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+    padding: 30px;
+    text-align: center;
+    width: 200px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+    position: sticky;
+    top: 70px;
+}
+
+.avatar {
+    width: 120px;
+    height: 120px;
+    border: 2px solid #e0e0e0;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.email {
+    font-size: 15px;
+    color:#a0a0a0;
+}
+
+.followers {
+    margin: 10px 0;
+}
+
+.edit-profile {
+    background-color: #36BC9B;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.edit-profile:hover {
+    background-color: #2c997e;
+}
+
+.upload-message {
+    margin: 20px 0;
+}
+
+.points-coupons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.menu {
+    width: 160px;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: left;
+}
+
+.menu h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.sideMenu {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.menu ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu ul li {
+    margin: 5px 0;
+}
+
+.menu hr {
+    border: 1px solid #ddd; /* 가로 구분선 */
+    margin: 5px 0 25px; /* 여백 조정 */
+    opacity: 0.5;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #555;
+    padding: 8px 12px;
+    display: block;
+    border-radius: 4px;
+}
+
+.menu a:hover {
+    color: #36BC9B;
+}
+
+.active {
+    color: #36BC9B; /* 활성화된 링크 색 */
+}
+
+.badge {
+    background-color: #f44336; /* 배지 색 */
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+}
+
+.reserv-container {
+    background-color: white;
+    padding: 20px;
+    width: 50%;
+}
+
+h1 {
+    margin: 0 0 20px;
+    font-size: 24px;
+    font-weight: 700;
+    color: rgb(27, 29, 31);
+    letter-spacing: -.3px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center; /* 중앙 정렬 */
+    margin-top: 70px; /* 상단 여백 */
+    padding: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+.pagination button {
+    padding: 10px 15px;
+    border: none;
+    background-color: #ffffff; /* 버튼 색상 */
+    color: rgb(173, 173, 173);
+    cursor: pointer;
+    margin: 0 5px; /* 버튼 간격 */
+}
+
+.pagination span {
+    align-self: center; /* 세로 중앙 정렬 */
+    margin: 0 10px; /* 여백 */
+}
+
+/* 마이페이지 끝 */
+
+.review-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+}
+
+.review-table th, .review-table td {
+    border-top: 1px solid #ddd;
+    padding: 10px 20px;
+    text-align: center;
+}
+
+.review-table th {
+    background: #f5f5f5;
+    font-weight: bold;
+}
+
+.review-table td img {
+    max-width: 50px;
+    border-radius: 4px;
+}
+
+.manage-btn {
+    padding: 5px 10px;
+    background: #36BC9B;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+a {
+    text-decoration: none; /* 밑줄 제거 */
+    color: rgb(27, 29, 31);
+}
+
+.rating {
+    color: orange;
+    font-weight: bold;
+}
+
+.help {
+    font-size: 12px;
+    color: #666;
+}

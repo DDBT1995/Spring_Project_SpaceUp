@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC " -//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.sist.web.dao.ReservationDao">
+	
+	<resultMap type="com.sist.web.model.Reservation" id="reservationResultMap">
+	    <id column="RESERVATION_ID" property="reservationId"/>
+	    <result column="SPACE_ID" property="spaceId"/>
+	    <result column="SPACE_TYPE" property="spaceType"/>
+	    <result column="GUEST_EMAIL" property="guestEmail"/>
+	    <result column="USE_DATE" property="useDate"/>
+	    <result column="USE_START_TIME" property="useStartTime"/>
+	    <result column="USE_END_TIME" property="useEndTime"/>
+	    <result column="USE_PEOPLE" property="usePeople"/>
+	    <result column="USE_PURPOSE" property="usePurpose"/>
+	    <result column="STATUS" property="status"/>
+	    <result column="REG_DATE" property="regDate"/>
+	    <result column="DEL_DATE" property="delDate"/>
+   		<result column="SPACE_NAME" property="spaceName"></result>
+   		<result column="SPACE_ADDR" property="spaceAddr"></result>
+		<result column="HOST_NICKNAME" property="hostNickname"></result>
+		<result column="SPACE_TYPE" property="spaceType" />
+	</resultMap>
+	
+	<!-- 선행처리기(시퀀스 조회) -->
+	<select id="seqSelect" resultType="long">
+		SELECT SEQ_RESERVATION_ID.NEXTVAL FROM DUAL
+	</select>
+	
+	<!-- 주문 insert -->
+	<insert id="reservationInsert" parameterType="com.sist.web.model.Reservation">
+		INSERT INTO RESERVATION (
+		        RESERVATION_ID,
+		        SPACE_ID,
+		        GUEST_EMAIL,
+		        USE_DATE,
+		        USE_START_TIME,
+		        USE_END_TIME,
+		        USE_PEOPLE,
+		        USE_PURPOSE,
+		        STATUS,
+		        REG_DATE,
+		        DEL_DATE
+		) VALUES (
+		    #{reservationId},
+		    #{spaceId},
+		    #{guestEmail},
+		    #{useDate},
+		    #{useStartTime},
+		    #{useEndTime},
+		    #{usePeople},
+		    #{usePurpose},
+		    'P',
+		    SYSDATE,
+		    #{delDate}
+		)
+	</insert>
+	
+	<update id="cancelReservation" parameterType="long">
+		UPDATE RESERVATION
+		   SET STATUS = 'D',
+		       DEL_DATE = SYSDATE
+		 WHERE RESERVATION_ID = #{value}
+	</update>
+	
+	<select id="reservationSelect" parameterType="long" resultMap="reservationResultMap">
+		SELECT
+		    RESERVATION_ID,
+		    NVL(RE.SPACE_ID, 0) AS SPACE_ID,
+		    NVL(RE.GUEST_EMAIL, '') AS GUEST_EMAIL,
+    		NVL(RE.USE_DATE, '') AS USE_DATE,
+		    NVL(RE.USE_START_TIME, 0) AS USE_START_TIME,
+		    NVL(RE.USE_END_TIME, 0) AS USE_END_TIME,
+		    NVL(RE.USE_PEOPLE, 0) AS USE_PEOPLE,
+		    NVL(RE.USE_PURPOSE, '') AS USE_PURPOSE,
+		    NVL(RE.STATUS, '') AS STATUS,
+		    NVL(TO_CHAR(RE.REG_DATE, 'YYYY.MM.DD HH24:MI:SS'), '') AS REG_DATE,
+		    NVL(TO_CHAR(RE.DEL_DATE, 'YYYY.MM.DD HH24:MI:SS'), '') AS DEL_DATE,
+		    NVL(S.SPACE_TYPE, '') AS SPACE_TYPE
+		FROM
+		    RESERVATION RE, SPACE S
+		WHERE
+		    RESERVATION_ID = #{value}
+		  AND
+		  	RE.SPACE_ID = S.SPACE_ID
+	</select>
+	
+	
+	<select id="reservationList" parameterType="com.sist.web.model.Reservation" resultMap="reservationResultMap">
+		SELECT RESERVATION_ID,
+		       SPACE_ID,
+		       SPACE_NAME,
+		       SPACE_TYPE,
+		       GUEST_EMAIL,
+		       USE_DATE,
+		       USE_START_TIME,
+		       USE_END_TIME,
+		       USE_PEOPLE,
+		       USE_PURPOSE,
+		       STATUS,
+		       REG_DATE,
+		       DEL_DATE
+		  FROM (SELECT ROWNUM AS RNUM,
+		               RESERVATION_ID,
+		               SPACE_ID,
+		               SPACE_NAME,
+		               SPACE_TYPE,
+		               GUEST_EMAIL,
+		               USE_DATE,
+		               USE_START_TIME,
+		               USE_END_TIME,
+		               USE_PEOPLE,
+		               USE_PURPOSE,
+		               STATUS,
+		               REG_DATE,
+		               DEL_DATE
+		          FROM (SELECT A.RESERVATION_ID RESERVATION_ID,
+		                       A.SPACE_ID SPACE_ID,
+		                       C.SPACE_NAME SPACE_NAME,
+		                       C.SPACE_TYPE SPACE_TYPE,
+		                       A.GUEST_EMAIL GUEST_EMAIL,
+		                       A.USE_DATE USE_DATE,
+		                       A.USE_START_TIME USE_START_TIME,
+		                       A.USE_END_TIME USE_END_TIME,
+		                       A.USE_PEOPLE USE_PEOPLE,
+		                       A.USE_PURPOSE USE_PURPOSE,
+		                       A.STATUS STATUS,
+		                       TO_CHAR(A.REG_DATE, 'YYYY.MM.DD HH24:MI:SS') REG_DATE,
+		                       NVL(TO_CHAR(A.DEL_DATE, 'YYYY.MM.DD HH24:MI:SS'), '') DEL_DATE
+		                  FROM RESERVATION A, GUEST B, SPACE C
+		                 WHERE A.GUEST_EMAIL = B.GUEST_EMAIL
+		                   AND A.SPACE_ID = C.SPACE_ID
+		                   AND A.GUEST_EMAIL = #{guestEmail}
+		            
+		            <!-- 예약 상태 -->
+		            <if test="status != null and status != ''">
+                           AND A.STATUS = #{status}
+                    </if>
+		            
+		            <!-- 예약 번호 검색 -->
+	                <if test='searchValue != null and searchValue != ""'>		            	
+	                       AND A.RESERVATION_ID = #{searchValue}
+	                </if>
+	                
+		                 ORDER BY REG_DATE DESC))
+		 WHERE RNUM <![CDATA[>=]]> #{startRow}
+		   AND RNUM <![CDATA[<=]]> #{endRow}
+	</select>
+	
+	<!-- 총 예약 내역 갯수를 표시하기 위한 쿼리 -->
+	<select id="reservTotalCount" parameterType="com.sist.web.model.Reservation" resultType="long">
+		SELECT COUNT(A.RESERVATION_ID) AS CNT
+		  FROM RESERVATION A, GUEST B
+		 WHERE A.GUEST_EMAIL = B.GUEST_EMAIL
+		   AND A.GUEST_EMAIL = #{guestEmail}
+		<!-- 예약 상태 -->
+		<if test="status != null and status != ''">
+           AND A.STATUS = #{status}
+    	</if>
+    	<!-- 예약 번호 검색 -->
+    	<if test='searchValue != null and searchValue != ""'>		            	
+           AND A.RESERVATION_ID = #{searchValue}
+    	</if>
+	</select>
+	
+	<!-- 작성가능한 리뷰 조회 -->
+	<select id="reviewableReservations" parameterType="com.sist.web.model.Reservation" resultMap="reservationResultMap">
+		SELECT RESERVATION_ID, 
+		       GUEST_EMAIL, 
+		       NVL(SPACE_NAME, '') SPACE_NAME,
+		       NVL(SPACE_ADDR, '') SPACE_ADDR,
+		       SUBSTR(USE_DATE, 1, 4) || '. ' || SUBSTR(USE_DATE, 5, 2) || '. ' || SUBSTR(USE_DATE, 7, 2) AS USE_DATE,
+		       NVL(HOST_NICKNAME, '') HOST_NICKNAME,
+		       SPACE_ID,
+		       SPACE_TYPE
+		  FROM (SELECT ROWNUM AS RNUM,
+		       RESERVATION_ID, 
+		       GUEST_EMAIL, 
+		       NVL(SPACE_NAME, '') SPACE_NAME,
+		       NVL(SPACE_ADDR, '') SPACE_ADDR,
+		       USE_DATE,
+		       NVL(HOST_NICKNAME, '') HOST_NICKNAME,
+		       SPACE_ID,
+		       SPACE_TYPE
+		  FROM (SELECT R.RESERVATION_ID, 
+		               R.GUEST_EMAIL, 
+		               NVL(S.SPACE_NAME, '') SPACE_NAME,
+		               NVL(S.SPACE_ADDR, '') SPACE_ADDR,
+		               R.USE_DATE,
+		               NVL(H.HOST_NICKNAME, '') HOST_NICKNAME,
+		               S.SPACE_ID SPACE_ID,
+		               S.SPACE_TYPE SPACE_TYPE
+		        FROM RESERVATION R
+		        LEFT JOIN REVIEW RV ON R.RESERVATION_ID = RV.RESERVATION_ID
+		        LEFT JOIN SPACE S ON R.SPACE_ID = S.SPACE_ID
+		        LEFT JOIN HOST H ON S.HOST_EMAIL = H.HOST_EMAIL
+		        WHERE RV.RESERVATION_ID IS NULL
+		          AND R.STATUS = 'C'
+		          AND R.GUEST_EMAIL = #{guestEmail}
+		        ORDER BY R.RESERVATION_ID DESC))
+		 WHERE RNUM <![CDATA[>=]]> #{startRow}
+		   AND RNUM <![CDATA[<=]]> #{endRow}
+	</select>
+	
+	<!-- 작성 가능한 리뷰 총게시물 수 -->
+	<select id="reviewableCount" parameterType="String" resultType="long">
+		SELECT COUNT(R.RESERVATION_ID) AS CNT
+		  FROM RESERVATION R
+		  LEFT JOIN REVIEW RV ON R.RESERVATION_ID = RV.RESERVATION_ID
+		  LEFT JOIN SPACE S ON R.SPACE_ID = S.SPACE_ID
+		  LEFT JOIN HOST H ON S.HOST_EMAIL = H.HOST_EMAIL
+		 WHERE RV.RESERVATION_ID IS NULL
+		   AND R.STATUS = 'C'
+		   AND R.GUEST_EMAIL = #{value}
+	</select>
+	
+	
+</mapper>

@@ -1,0 +1,854 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+	background-color: #fff;
+}
+
+input[type='number'] {
+    -moz-appearance:textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+.spaceList {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+}
+
+.spaceList h1, h2, h3 {
+    margin-bottom: 1rem;
+
+}
+
+.spaceList a {
+    text-decoration-line: none;
+}
+
+.modalShadowBox {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1100;
+}
+
+.modalMouse {
+    overflow: hidden;
+}
+
+/* 위로 버튼 */
+.toTopBtn {
+	position: fixed;
+	bottom: 40px;
+	right: 40px;
+	z-index: 1000;
+	background: none;
+	border: none;
+	cursor: pointer;
+	outline-style: none;
+}
+
+.toTopBtn img {
+	width: 40px;
+	height: 40px;
+}
+
+.spaceListMain {
+    width: 1200px;
+    margin: auto;
+    margin-top: 200px;
+}
+
+.mainSearchBox {
+    position: relative;
+    top: 40px;
+    height: 100px;
+    border: 3px solid #36BC9B;
+    border-radius: 100px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.06) 0px 3px 17px 1px;
+}
+
+.mainSearchBox.modal-active {
+    z-index: 1100;
+}
+
+.filterDivider {
+	width: 1px;
+    height: 50px;
+    background-color: rgb(189, 189, 189);
+}
+
+.mainSearchBtnBox {
+    position: absolute;
+    top: -50px;
+    right: 30px;
+}
+
+.mainSearchSearchBtn {
+    background-color: #36BC9B;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+    border: none;
+    border-radius: 10px;
+    padding: 8px 10px;
+    cursor: pointer;
+}
+
+.mainSearchSearchBtn:hover {
+    color: white;
+    background-color: #24876f;
+}
+
+.mainSearchResetBtn {
+    background-color: burlywood;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+    border: none;
+    border-radius: 10px;
+    padding: 8px 10px;
+    cursor: pointer;
+}
+
+.mainSearchResetBtn:hover {
+    color: white;
+    background-color: #ab8d65;
+}
+
+.mainSearch {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-inline: 22px;
+    font-size: 15px;
+}
+
+.mainSearch > div {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    color: rgb(138, 138, 138);
+    border-radius: 100px;
+    transition: all 0.5s;
+    position: relative;
+}
+
+.mainSearchLocal {
+	height: 100%;
+	padding: 0 18px 0 38px;
+	flex: 1 1 200px;
+}
+
+.mainSearchLocalInput {
+    width: 400px;
+    padding: 20px;
+    position: absolute;
+    bottom: -140px;
+    background-color: #fff;
+    border-radius: 10px;
+    z-index: 1200;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 8px;
+    left: -4px;
+    cursor: default !important;
+}
+
+.mainSearchPlace {
+	height: 100%;
+	padding: 0 18px 0 38px;
+	flex: 1 1 200px;
+}
+
+.mainSearchPlaceInput {
+	width: 700px;
+    padding: 20px;
+    position: absolute;
+    bottom: -230px;
+    background-color: #fff;
+    border-radius: 10px;
+    z-index: 1200;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 8px;
+    left: -20px;
+    cursor: default !important;
+}
+
+.localItem {
+    border: 1px solid rgb(212, 219, 226);
+    border-radius: 10px;
+    text-align: center;
+    color: #232323;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 15px;
+}
+
+.placeItem {
+	display: flex;
+	border: 1px solid rgb(212, 219, 226);
+    border-radius: 10px;
+    text-align: center;
+    color: #232323;
+    cursor: pointer;
+    padding: 5px 15px;
+    font-size: 15px;
+    gap: 10px;
+    align-items: center
+}
+
+.placeItem img {
+    pointer-events: none;
+}	
+
+.localItem:hover, .placeItem:hover {
+    color: black;
+    background-color: white;
+}
+
+.mainSearchPeople {
+    position: relative;
+    height: 100%;
+	padding: 0 18px 0 38px;
+	flex: 1 1 200px;
+}
+
+.mainSearchPeopleInput {
+    width: 350px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    bottom: -220px;
+    left: -30px;
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    z-index: 1200;
+    cursor: default !important;
+}
+
+.peopleBox {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.peopleInputBox {
+	border-radius: 4px;
+    border: 1px solid rgb(212, 219, 226);
+    padding: 9px 12px;
+    display: flex;
+    gap: 4px;
+    margin: 0 20px;
+}
+
+.peopleInputBox p {
+	color: rgb(61, 61, 61);
+}
+
+.quantity {
+    width: 60%;
+    text-align: right;
+    border: none;
+}
+
+.peopleMinus, .peoplePlus {
+    border: none; /* 테두리 제거 */
+    background: transparent; /* 배경색 제거 */
+    padding: 0; /* 여백 제거 */
+    cursor: pointer; /* 클릭 가능 커서 설정 */
+    outline: none; /* 포커스 테두리 제거 */
+}
+
+.peopleSelect {
+    min-height: 50px;
+    padding: 0px 15px;
+    border-radius: 4px;
+    border: none;
+    letter-spacing: -0.78px;
+    font-size: 16px;
+    line-height: 27px;
+    color: rgb(255, 255, 255);
+    background-color: #36BC9B;
+    cursor: pointer;
+    margin-top: 40px;
+}
+
+.mainSearchDate {
+     position: relative;
+    height: 100%;
+	padding: 0 18px 0 38px;
+	flex: 1 1 200px;
+}
+
+.mainSearchDateInput {
+   bottom: -520px;
+    left: -100px;
+    position: absolute;
+    background-color: white;
+    display: none;
+    z-index: 1200;
+    border-radius: 10px;
+    padding: 20px;
+    cursor: default !important;
+}
+
+.mainSearchItemDateInput, .mainSearchItemPeopleInput, .mainSearchItemPlaceInput, .mainSearchInput {
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.mainSearchSelect {
+    display: none;
+}
+
+.mainSearch > div:hover {
+    /* flex: 1; */
+	cursor: pointer;
+}
+
+/* sorting 리스트 정렬*/
+
+.spaceListSelectBox {
+    margin: 80px 0 5px 0;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+}
+
+.spaceListTotalCntBox {
+    margin-left: 5px;
+}
+
+.spaceListTotalCnt {
+    color: #36BC9B;
+}
+
+/* 정렬 */
+.spaceListSelect {
+    border: none;
+    font-weight: 600;
+    padding: 10px;
+    font-size: 15px;
+	-webkit-appearance: none; /* 네이티브 외형 감추기 */
+	-moz-appearance: none;
+	appearance: none;
+	background: url(/resources/images/space/icon/ic_search_sort_v4.svg) no-repeat 95% 50%;  /* 화살표 모양의 이미지 */
+	cursor: pointer;
+	width: 130px;
+}
+
+.spaceListSelect:focus {
+    outline: none;
+    /* remove focus border */
+    border: none;
+}
+
+.spaceListSelect option {
+    font-weight: bold;
+    padding: 20px;
+    /* increase padding to widen option width */
+}
+
+.spaceListSelect::-ms-expand {
+	display: none;
+}
+
+.spaceListSelect option:checked {
+    color: #36BC9B;
+}
+
+.spaceListSelect option:hover {
+    background-color: #36BC9B;
+    /* change background color when selected or hovered */
+    color: #fff;
+    /* change font color when selected or hovered */
+}
+
+/* Remove default border for option when selected */
+.spaceListSelect option:checked {
+    border: none;
+}
+
+/* list */
+
+.mainContentTitle {
+    color: #36BC9B !important;
+    margin: 50px 0px 20px 30px;
+}
+
+.mainContentsBox {
+    padding: 0px 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 15px;
+}
+
+.mainItemCard {
+    height: 450px;
+    display: flex;
+    flex-direction: column;
+}
+
+.mainItemCard > img {
+    width: 100%;
+    height: 70%;
+    border-radius: 5px;
+    object-fit: cover;        
+}
+
+.mainItemCardScript {
+    width: 100%;
+    height: 30%;
+    left: 0px;
+    bottom: 0px;
+    color: #333;
+    padding: 20px 0px 0px 5px;
+}
+
+.mainItemCardScriptTop {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 10px;
+}
+
+.CardScriptTopRight img {
+    vertical-align: top;
+}
+
+.mainItemMoreBtnBox {
+	display: flex;
+	justify-content: center;
+	alighn-item: center;	
+}
+
+.mainItemMoreBtn {
+    margin-top: 40px;
+    padding: 15px 20px;
+    border: none;
+    color: #333;
+    font-size: 20px;
+    font-weight: 600;
+    transition: all 0.2s;
+    background-color: inherit;
+}
+
+.mainItemMoreBtn:hover {
+    color: #36BC9B;
+    cursor: pointer;
+}
+
+.spaceTitles {
+    white-space: nowrap; /* 텍스트를 한 줄로 만듦 */
+    overflow: hidden;    /* 텍스트가 넘치면 잘림 */
+    text-overflow: ellipsis; /* 넘치는 부분에 '...' 추가 */
+    max-width: 250px;    /* 적당한 최대 너비 설정 */
+}
+
+
+.spaceImageContainer {
+    position: relative;
+    height: 450px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 좋아요 */
+.heartLikeyButton {
+    position: absolute;
+    top: 10px;  /* 하트를 이미지 상단 10px 위치 */
+    right: 10px; /* 하트를 이미지 우측 10px 위치 */
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    z-index: 10; /* 하트 버튼이 이미지 위에 표시되도록 */
+}
+
+.heartLikeyButton img {
+    width: 43px;  /* 하트 이미지 크기 */
+    height: 43px;
+}
+
+.scale-up-center {
+   -webkit-animation: scale-up-center 0.7s cubic-bezier(0.680, -0.550, 0.265, 1.550) both;
+           animation: scale-up-center 0.7s cubic-bezier(0.680, -0.550, 0.265, 1.550) both;
+}
+
+@-webkit-keyframes scale-up-center {
+  0% {
+    -webkit-transform: scale(0.1);
+            transform: scale(0.1);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+@keyframes scale-up-center {
+  0% {
+    -webkit-transform: scale(0.1);
+            transform: scale(0.1);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+.bestSlideTitle {
+    color: #36BC9B !important;
+    display: inline-block;
+}
+
+.bestSlideBtnBox {
+    position: absolute;
+    top: 5px;
+    right: 0px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.bestSlidePrevBtn, .bestSlideNextBtn, .likeySlidePrevBtn, .likeySlideNextBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid #EFF3F5;
+    background-color: #FFFFFF;
+    border-radius: 50%;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.bestSlidePrevBtn:hover:before, .bestSlideNextBtn:hover:before {
+    border-color: white;
+}
+
+.likeySlidePrevBtn:hover:before, .likeySlideNextBtn:hover:before {
+    border-color: white;
+}
+
+.bestSlideBox {
+    width: 100%;
+    height: 380px;
+    margin: 20px 0px;
+    display: flex;    
+}
+
+.bestSlideContainer {
+    margin-top: 100px;
+    margin-bottom: 80px;
+    position: relative;
+}
+
+.bestSlideList,
+.likeySlideList {    
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+	gap: 20px;
+    transition: all 0.5s ease-in-out;
+    padding: 10px;
+}
+
+.bestSlideItem {
+    width: 380px;
+    border-radius: 10px;
+    box-shadow: 1px 2px 6px 0 rgba(0, 0, 0, .16078);
+    background-color: #fff;
+    transition: box-shadow 0.3s ease;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.likeySlideItem {
+    width: 380px;
+    border-radius: 10px;
+    box-shadow: 1px 2px 6px 0 rgba(0, 0, 0, .16078);
+    background-color: #fff;
+    transition: box-shadow 0.3s ease;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+
+.bestSlideItemImgBox {
+    width: 100%;
+    position: relative;
+   
+    display: flex;
+    flex-direction: column;
+}
+
+.bestSlideItemImgBox > img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    image-rendering: auto !important;
+}
+
+.bestSlideItemTextBox {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px 0px;
+    font-weight: bold;    
+}
+
+.bestSlideItemTextTitle {
+    margin-top: 6px;
+    font-size: 1.3rem;
+    white-space: nowrap; /* 텍스트를 한 줄로 만듦 */
+    overflow: hidden;    /* 텍스트가 넘치면 잘림 */
+    text-overflow: ellipsis; /* 넘치는 부분에 '...' 추가 */
+    max-width: 400px;    /* 적당한 최대 너비 설정 */
+}
+
+.bestSlideItemTextPlace {
+    font-size: 0.8rem;
+    color: gray;
+    /* 여러 줄 자르기 추가 스타일 */
+	white-space: normal;
+	line-height: 1.2;
+	height: 3.6em;
+	text-align: left;
+	word-wrap: break-word;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+}
+
+.bestSlideItemTextPrice {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bestItemCntBox {
+    display: flex;
+    height: 12px;
+    align-items: center;
+    gap: 10px;
+}
+
+.bestSlideItemTextPrice > span > span {
+    color: #333;
+}
+
+.maxPeople {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.reviewCnt {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.likeyCnt {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+/* 달력 전체 배경색 */
+.fc {
+	width: 420px;
+	height: 460px;
+    background-color: #fff; /* 원하는 색상으로 변경 */
+    padding: 10px;
+    overflow: hidden;
+}
+
+.fc-icon {
+	color: white;
+}
+
+.fc .fc-scrollgrid {
+    border: none;
+    width: 400px;
+    height: 380px;
+}
+
+/* 날짜 셀 기본 스타일 */
+.fc-daygrid-day {
+    background-color: #fff; /* 날짜 셀 배경 */
+    border: 1px solid #e0e0e0; /* 날짜 셀 경계 */
+}
+
+/* 오늘 날짜 숫자 강조 */
+.fc-day-today .fc-daygrid-day-number {
+    color: #36BC9B;
+    font-weight: 600;
+    border: 2px solid #36BC9B;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    line-height: 30px;
+    cursor: pointer !important;
+}
+
+/* 툴바 스타일 */
+.fc-toolbar {
+    color: white;
+    border-radius: 5px;
+}
+
+.fc .fc-toolbar-title {
+    margin: 0px;
+    font-size: 20px; /* 원하는 글자 크기로 조정 */
+    font-weight: bold; /* 필요하면 글자 두께 조정 */
+    color: #222;
+}
+
+/* 툴바 버튼 */
+.fc-toolbar .fc-button {
+    background-color: #36BC9B;
+    font-color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    height: 35px;
+}
+
+.fc-button:focus {
+    outline: none !important; /* 포커스 아웃라인 제거 */
+    box-shadow: none !important; /* 박스 그림자 제거 */
+}
+
+.fc-toolbar .fc-button:hover {
+    color: white;
+    background-color: #47cfad;
+    border: none;
+}
+
+.fc .fc-button-primary:disabled {
+    background-color: rgb(223, 226, 231);
+	border: none;
+    color: white;
+}
+
+.fc .fc-button-primary:not(:disabled).fc-button-active, .fc .fc-button-primary:not(:disabled):active {
+    background-color: #36BC9B;
+    border: none;
+    color: white;
+}
+
+.fc-dayGridMonth-button {
+	display: none;
+}
+
+.fc table {
+    border-collapse: collapse;
+    border-spacing: 0px;
+    border: none; /* 테이블 전체 경계 제거 */
+}
+
+.fc td, .fc th {
+    border: none; /* 테이블 셀 경계 제거 */
+    width: 0px;
+}
+
+/* 비활성 날짜 스타일 */
+.fc-day-disabled {
+    background-color: #fafbfb !important; /* 비활성 날짜 배경 */
+    color: rgb(223, 226, 231) !important; /* 비활성 날짜 텍스트 */
+    pointer-events: none !important; /* 클릭 비활성화 */
+}
+
+/* 이벤트 스타일 */
+.fc-daygrid-event {
+    color: white; /* 이벤트 텍스트 */
+    padding: 5px;
+    font-size: 12px;
+}
+
+/* 날짜 셀 Hover 효과 */
+.fc-daygrid-day:hover {
+    cursor: pointer !important;
+}
+
+/* 날짜 셀 내부 영역 */
+.fc-daygrid-day-frame {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 숫자 크기와 정렬 조정 */
+.fc-daygrid-day-number {
+    font-size: 15px;
+    line-height: 1;
+    text-align: center;
+}
+
+/* 선택된 날짜 스타일 */
+.fc-day-selected {
+    background-color: #0078d7; /* 배경색 변경 */
+    color: white; /* 텍스트 색상 변경 */
+    font-weight: bold; /* 텍스트 굵게 */
+    border-radius: 8px; /* 둥근 모서리 */
+    border: 2px solid #005bb5; /* 테두리 추가 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+}
+
+/* 토요일 색상 */
+.fc-saturday {
+    color: #3395E5;
+}
+
+/* 일요일 및 공휴일 색상 */
+.fc-sunday, .fc-holiday {
+    color: #E75073;
+}
+
+.fc-day-sat {
+    background-color: #fff;
+    color: #3395E5;
+}
+
+.fc-day-sun {
+	background-color: #fff;
+	color: #E75073;
+}
+
+.time {
+	font: #333;
+	font-size: 14px;
+	margin-left: 5px;
+	font-weight: 500;
+}
+

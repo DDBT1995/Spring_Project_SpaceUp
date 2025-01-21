@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC " -//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.sist.web.dao.GuestDao">
+
+	<resultMap type="com.sist.web.model.Guest" id="guestResultMap">
+		<id column="GUEST_EMAIL" property="guestEmail"/>
+		<result column="GUEST_PASSWORD" property="guestPwd"/>
+		<result column="guest_NICKNAME" property="guestNickname"/>
+		<result column="GUEST_BIRTH" property="guestBirth"/>
+		<result column="GUEST_TEL" property="guestTel"/>
+		<result column="STATUS" property="status"/>
+		<result column="REG_DATE" property="regDate"/>
+		<result column="MODI_DATE" property="modiDate"/>
+		<result column="DEL_DATE" property="delDate"/>
+	</resultMap>
+	
+	<select id="guestSelect" parameterType="string" resultMap="guestResultMap">
+		SELECT
+		    GUEST_EMAIL,
+		    NVL(GUEST_PASSWORD, '') GUEST_PASSWORD,
+		    NVL(GUEST_NICKNAME, '') GUEST_NICKNAME,
+		    NVL(GUEST_BIRTH, '') GUEST_BIRTH,
+		    NVL(GUEST_TEL, '') GUEST_TEL,
+		    NVL(STATUS, '') STATUS,
+		    NVL(TO_CHAR(REG_DATE, 'YYYY.MM.DD HH24:MI:SS'), '') REG_DATE,
+			NVL(TO_CHAR(MODI_DATE, 'YYYY.MM.DD HH24:MI:SS'), '') MODI_DATE,
+			NVL(TO_CHAR(DEL_DATE, 'YYYY.MM.DD HH24:MI:SS'), '') DEL_DATE
+		FROM
+		    GUEST
+		WHERE
+		    GUEST_EMAIL = #{value}
+	</select>
+	
+	<select id="guestNicknameDupChk" parameterType="string" resultType="int">
+		SELECT
+    		COUNT(GUEST_EMAIL)
+		FROM
+    		GUEST
+		WHERE
+    		GUEST_NICKNAME = #{VALUE}
+	</select>
+	
+	<insert id="guestReg" parameterType="com.sist.web.model.Guest">
+		INSERT INTO GUEST (
+		    GUEST_EMAIL,
+		    GUEST_PASSWORD,
+		    GUEST_NICKNAME,
+		    GUEST_BIRTH,
+		    GUEST_TEL,
+		    STATUS,
+		    REG_DATE
+		) VALUES (
+		    #{guestEmail},
+		    #{guestPwd},
+		    #{guestNickname},
+		    #{guestBirth},
+		    #{guestTel},
+		    #{status},
+		    SYSDATE
+		)
+	</insert>
+	
+	<select id="findEmailList" parameterType="String" resultMap="guestResultMap">
+		SELECT
+			GUEST_EMAIL,
+		    NVL(GUEST_PASSWORD, '') GUEST_PASSWORD,
+		    NVL(GUEST_NICKNAME, '') GUEST_NICKNAME,
+		    NVL(GUEST_BIRTH, '') GUEST_BIRTH,
+		    NVL(GUEST_TEL, '') GUEST_TEL,
+		    NVL(STATUS, '') STATUS,
+		    NVL(TO_CHAR(REG_DATE, 'YYYY.MM.DD'), '') REG_DATE,
+			NVL(TO_CHAR(MODI_DATE, 'YYYY.MM.DD'), '') MODI_DATE,
+			NVL(TO_CHAR(DEL_DATE, 'YYYY.MM.DD'), '') DEL_DATE
+		  FROM GUEST 
+		 WHERE GUEST_TEL = #{value}
+	</select>
+	
+	<update id="guestPwdUpdate" parameterType="com.sist.web.model.Guest">
+		UPDATE GUEST
+		   SET GUEST_PASSWORD = #{guestPwd},
+		   	   MODI_DATE = SYSDATE
+		 WHERE GUEST_EMAIL = #{guestEmail}
+	</update>
+	
+	<select id="guestSelectNick" parameterType="String" resultMap="guestResultMap">
+		 SELECT
+		    GUEST_EMAIL,
+		    NVL(GUEST_PASSWORD, '') GUEST_PASSWORD,
+		    NVL(GUEST_NICKNAME, '') GUEST_NICKNAME,
+		    NVL(GUEST_BIRTH, '') GUEST_BIRTH,
+		    NVL(GUEST_TEL, '') GUEST_TEL,
+		    NVL(STATUS, '') STATUS,
+		    NVL(TO_CHAR(REG_DATE, 'YYYY.MM.DD HH24:MI:SS'), '') REG_DATE,
+			NVL(TO_CHAR(MODI_DATE, 'YYYY.MM.DD HH24:MI:SS'), '') MODI_DATE,
+			NVL(TO_CHAR(DEL_DATE, 'YYYY.MM.DD HH24:MI:SS'), '') DEL_DATE
+		FROM
+		    GUEST
+		WHERE
+		    GUEST_NICKNAME = #{value}
+	</select>
+	
+	<select id="guestChkPwd" parameterType="String" resultType="String">
+		SELECT GUEST_PASSWORD
+		  FROM GUEST
+		 WHERE GUEST_EMAIL = #{value}
+    </select>
+    
+    <update id="guestUpdate" parameterType="com.sist.web.model.Guest">
+		UPDATE GUEST
+		   SET GUEST_PASSWORD = #{guestPwd},
+		       GUEST_NICKNAME = #{guestNickname},
+		       GUEST_TEL = #{guestTel},
+		       MODI_DATE = SYSDATE
+		 WHERE GUEST_EMAIL = #{guestEmail}
+	</update>
+	
+    <update id="guestDelete" parameterType="com.sist.web.model.Guest">
+		UPDATE GUEST
+		   SET STATUS = 'N',
+		   DEL_DATE = SYSDATE
+		 WHERE GUEST_EMAIL = #{guestEmail}
+	</update>
+	
+
+</mapper>

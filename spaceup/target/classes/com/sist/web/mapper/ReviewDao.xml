@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sist.web.dao.ReviewDao">
+  <!-- 리뷰 resultMap -->
+	<resultMap type="com.sist.web.model.Review" id="reviewResultMap">
+		<id column="REVIEW_ID" property="reviewId" />
+		<result column="RESERVATION_ID" property="reservationId" />
+		<result column="REVIEW_SCORE" property="reviewScore" />
+		<result column="REVIEW_CONTENT" property="reviewContent" />
+		<result column="STATUS" property="status" />
+		<result column="REG_DATE" property="regDate" />
+		<result column="MODI_DATE" property="modiDate" />
+		<result column="DEL_DATE" property="delDate" />
+		<result column="SPACE_NAME" property="spaceName" />
+		<result column="SPACE_ADDR" property="spaceAddr" />
+		<result column="SPACE_ID" property="spaceId" />
+		<result column="SPACE_TYPE" property="spaceType" />
+	</resultMap>
+	
+	<!-- 리뷰 작성 -->
+  	<insert id="insertReview" parameterType="com.sist.web.model.Review">
+ 		<!-- 선행 처리기 -->
+		<selectKey resultType="long" keyProperty="reviewId" order="BEFORE">
+			SELECT SEQ_REVIEW_ID.NEXTVAL FROM DUAL
+		</selectKey>
+			
+  		INSERT INTO REVIEW (
+		    REVIEW_ID,
+		    RESERVATION_ID,
+		    REVIEW_SCORE,
+		    REVIEW_CONTENT,
+		    STATUS,
+		    REG_DATE,
+		    MODI_DATE,
+		    DEL_DATE
+		) VALUES (
+		    #{reviewId},
+		    #{reservationId},
+		    #{reviewScore},
+		    #{reviewContent},
+		    #{status},
+		    SYSDATE,
+		    #{modiDate},
+		    #{delDate}
+		)
+  	</insert>
+  
+  <!-- 작성한 리뷰 조회 -->
+  	<select id="myReviewList" parameterType="com.sist.web.model.Review" resultMap="reviewResultMap">
+  		SELECT 
+		    RESERVATION_ID,
+		    REVIEW_SCORE,
+		    REVIEW_CONTENT,
+		    REG_DATE,
+		    SPACE_NAME,
+		    SPACE_ADDR,
+		    SPACE_ID,
+		    SPACE_TYPE
+		FROM(SELECT ROWNUM AS RNUM,
+		            RESERVATION_ID,
+		            REVIEW_SCORE,
+		            REVIEW_CONTENT,
+		            REG_DATE,
+		            SPACE_NAME,
+		            SPACE_ADDR,
+		            SPACE_ID,
+		            SPACE_TYPE
+		        FROM (SELECT 
+		                    RV.RESERVATION_ID,
+		                    NVL(RV.REVIEW_SCORE, 0) REVIEW_SCORE,
+		                    NVL(RV.REVIEW_CONTENT, '') REVIEW_CONTENT,
+		                    NVL(TO_CHAR(RV.REG_DATE, 'YYYY. MM. DD'), '') REG_DATE,
+		                    NVL(SP.SPACE_NAME, '') SPACE_NAME,
+		                    NVL(SP.SPACE_ADDR, '') SPACE_ADDR,
+		                    SP.SPACE_ID,
+		                    SP.SPACE_TYPE
+		                FROM REVIEW RV
+		                JOIN RESERVATION RS ON RV.RESERVATION_ID = RS.RESERVATION_ID
+		                JOIN SPACE SP ON RS.SPACE_ID = SP.SPACE_ID
+		                WHERE RS.GUEST_EMAIL = #{guestEmail}
+		                ORDER BY RV.REG_DATE DESC))
+		WHERE RNUM <![CDATA[>=]]> #{startRow}
+		  AND RNUM <![CDATA[<=]]> #{endRow}
+  	</select>	
+  	
+  	<!-- 작성한 리뷰 총게시물 수 -->
+  	<select id="myReviewCount" parameterType="String" resultType="long">
+  		SELECT COUNT(RV.REVIEW_ID) AS CNT
+		FROM REVIEW RV
+		JOIN RESERVATION RS ON RV.RESERVATION_ID = RS.RESERVATION_ID
+		JOIN SPACE SP ON RS.SPACE_ID = SP.SPACE_ID
+		WHERE RS.GUEST_EMAIL = #{value}
+  	</select>
+</mapper>

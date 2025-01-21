@@ -1,0 +1,566 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.main {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Noto Sans KR', 'Roboto', Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+    background-color: #f8f9fa;
+}
+
+.main h1, h2, h3, span {
+    font-family: 'Pretendard', 'Roboto', sans-serif;
+    font-weight: 700;
+    color: #222;
+}
+
+.main a {
+    text-decoration: none;
+}
+
+.modalShadowBox {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1100;
+}
+
+.modalMouse {
+    overflow: hidden;
+}
+
+.carousel {
+	margin-top:120px;
+    position: relative;
+    width: 100vw;
+    height: 600px;
+    overflow: hidden;
+}
+
+.carousel-container {
+    height: 100%;
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 300%; /* 이미지 3개 기준 */
+}
+
+.carousel-container img {
+    width: 100vw;
+    height: auto;
+    flex-shrink: 0;
+}
+
+.prev-btn, .next-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.prev-btn {
+    left: 10px;
+}
+
+.next-btn {
+    right: 10px;
+}
+
+.prev-btn:hover, .next-btn:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* main */
+
+main {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.mainCateBox {
+    margin: 100px 0px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-gap: 20px;
+    text-align: center;
+}
+
+.mainCateCard {
+    height: 280px;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    text-decoration: none;
+}
+
+.mainCateCard:hover {
+    border-bottom: 10px solid #36BC9B;
+}
+
+.mainCateCard i {
+    margin: 20px 0px;
+    font-size: 40px;
+    padding: 20px;
+    border-radius: 100px;
+    color: white;
+    background-color: #36BC9B;
+}
+
+.mainCateCard > h2 {
+    margin: 20px 0px;
+}
+
+.bestSlideTitle {
+    color: #36BC9B !important;
+    display: inline-block;
+}
+
+.bestSlideBtnBox {
+    width: 90px;
+    height: 20px;
+    position: absolute;
+    top: 5px;
+    right: 0px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.bestSlidePrevBtn, .bestSlideNextBtn, .likeySlidePrevBtn, .likeySlideNextBtn {
+    position: relative;
+    width: 40px;
+    height: 35px;
+    border: 3px solid black;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+.bestSlidePrevBtn:hover, .bestSlideNextBtn:hover {
+    background-color: #000;
+}
+
+.likeySlidePrevBtn:hover, .likeySlideNextBtn:hover {
+    background-color: #000;
+}
+
+.bestSlidePrevBtn:hover:before, .bestSlideNextBtn:hover:before {
+    border-color: white;
+}
+
+.likeySlidePrevBtn:hover:before, .likeySlideNextBtn:hover:before {
+    border-color: white;
+}
+
+.bestSlidePrevBtn:before {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-top: 3px solid #000;
+    border-right: 3px solid #000;
+    transform: translate(-45%, -50%) rotate(225deg);
+}
+
+.bestSlideNextBtn:before {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-top: 3px solid #000;
+    border-right: 3px solid #000;
+    transform: translate(-55%, -50%) rotate(45deg);
+}
+
+.likeySlidePrevBtn:before {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-top: 3px solid #000;
+    border-right: 3px solid #000;
+    transform: translate(-45%, -50%) rotate(225deg);
+}
+
+.likeySlideNextBtn:before {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-top: 3px solid #000;
+    border-right: 3px solid #000;
+    transform: translate(-55%, -50%) rotate(45deg);
+}
+
+.bestSlideBox {
+    width: 100%;
+    height: 380px;
+    margin: 20px 0px;
+    overflow: hidden;
+}
+
+.bestSlideContainer {
+    margin-top: 100px;
+    position: relative;
+}
+
+.bestSlideList, .likeySlideList {
+    width: 335%;
+    height: 100%;
+    display: flex;
+    gap: 0px 0.5%;
+    transition: all 0.5s ease-in-out;
+}
+
+.bestSlideItem {
+    width: 380px;
+    border-radius: 10px;
+    box-shadow: 1px 2px 6px 0 rgba(0, 0, 0, .16078);
+    background-color: #fff;
+    transition: box-shadow 0.3s ease;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.likeySlideItem {
+    width: 380px;
+    border-radius: 10px;
+    box-shadow: 1px 2px 6px 0 rgba(0, 0, 0, .16078);
+    background-color: #fff;
+    transition: box-shadow 0.3s ease;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.bestSlideItemImgBox {
+    width: 100%;
+}
+
+.bestSlideItemImgBox > img {
+    width: 100%;
+    height: 250px;
+}
+
+.bestSlideItemTextBox {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px 0px;
+    font-weight: bold;
+}
+
+.bestSlideItemTextTitle {
+    margin-top: 6px;
+    font-size: 1.3rem;
+}
+
+.bestSlideItemTextPlace {
+    font-size: 0.8rem;
+    color: gray;
+}
+
+.bestSlideItemTextPrice {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bestItemCntBox {
+    display: flex;
+    height: 12px;
+    align-items: center;
+    gap: 7px;
+}
+
+.bestSlideItemTextPrice > span > span {
+    color: #36BC9B;
+}
+
+.maxPeople {
+    font-size: 12px;
+    display: flex;
+    gap: 2px;
+}
+
+.reviewCnt {
+    font-size: 12px;
+    display: flex;
+    gap: 2px;
+}
+
+.likeyCnt {
+    font-size: 12px;
+    display: flex;
+    gap: 2px;
+}
+
+.mainSearchBox {
+    position: relative;
+    height: 100px;
+    margin-top: 70px;
+    border: 3px solid #36BC9B;
+    border-radius: 100px;
+}
+
+.mainSearchBoxTitle {
+    padding: 5px 10px;
+    position: absolute;
+    top: -25%;
+    left: 5%;
+    color: white;
+    font-weight: bold;
+    background-color: #36BC9B;
+    border: 3px solid white;
+    border-radius: 100px;
+    z-index: 800;
+}
+
+.mainSearchBtnBox {
+    position: absolute;
+    top: -50px;
+    right: 30px;
+}
+
+.mainSearchSearchBtn {
+    background-color: #36BC9B;
+    color: #eee;
+    font-size: 15px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    padding: 8px 10px;
+}
+
+.mainSearchSearchBtn:hover {
+    color: white;
+    background-color: #333;
+}
+
+.mainSearchResetBtn {
+    background-color: burlywood;
+    color: #eee;
+    font-size: 15px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    padding: 8px 10px;
+}
+
+.mainSearchResetBtn:hover {
+    color: white;
+    background-color: #333;
+}
+
+.mainSearch {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mainSearch > div {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    flex: 1;
+    padding-left: 30px;
+    color: rgb(163, 163, 163);
+    border-radius: 100px;
+    transition: all 0.5s;
+    position: relative;
+}
+
+.mainSearchLocalInput, .mainSearchPlaceInput {
+    width: 500px;
+    padding: 20px;
+    position: absolute;
+    bottom: -90px;
+    background-color: #333;
+    border-radius: 5px;
+    z-index: 1200;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-gap: 8px;
+}
+
+.localItem, .placeItem {
+    border: 2px solid white;
+    border-radius: 10px;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+}
+
+.localItem:hover, .placeItem:hover {
+    color: black;
+    background-color: white;
+}
+
+.mainSearchPeople {
+    position: relative;
+}
+
+.mainSearchPeopleInput {
+    width: 400px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    bottom: -220px;
+    left: -80px;
+    background-color: #333;
+    padding: 40px;
+    border-radius: 10px;
+    z-index: 1200;
+}
+
+.peopleBox {
+    width: 100%;
+    margin: 0px auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.quantity {
+    padding: 15px;
+}
+
+.peopleMinus, .peoplePlus {
+    padding: 15px 20px;
+    border-radius: 100px;
+    cursor: pointer;
+}
+
+.peopleSelect {
+    margin-top: 40px;
+    padding: 10px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.mainSearchDate {
+    position: relative;
+}
+
+.mainSearchDateInput {
+    bottom: -650px;
+    left: -400px;
+    position: absolute;
+    width: 800px;
+    background-color: white;
+    display: none;
+    z-index: 1200;
+}
+
+.mainSearchSelect {
+    display: none;
+}
+
+.mainSearch > div:hover {
+    /* flex: 1; */
+    background-color: #eee;
+}
+
+.mainContentTitle {
+    color: #36BC9B !important;
+    margin-left: 30px;
+}
+
+.mainContentsBox {
+    margin-top: 30px;
+    padding: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 15px;
+}
+
+.mainItemCard > img {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+.mainItemCard {
+    position: relative;
+    height: 350px;
+}
+
+.mainItemCardScript {
+    width: 100%;
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px 0px 20px 15px;
+}
+
+.mainItemCardScript > h3 {
+    color: white;
+}
+
+/* New */
+
+.newSlideTitle {
+    margin-top: 60px;
+    color: #36BC9B !important;
+    display: inline-block;
+}
+
+.newItemBox {
+    width: 100%;
+    margin-top: 20px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.newItem {
+    width: 380px;
+    border-radius: 10px;
+    box-shadow: 1px 2px 6px 0 rgba(0, 0, 0, .16078);
+    background-color: #fff;
+    transition: box-shadow 0.3s ease;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.newItemListBtn {
+    width: 100%;
+    margin-top: 30px;
+    padding: 20px;
+    border: none;
+    color: #36BC9B;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* FullCalrendar css */
+.fc-day-sat, .fc-day-sun {
+    background-color: #f0f8ff; /* 연한 파란색 */
+}

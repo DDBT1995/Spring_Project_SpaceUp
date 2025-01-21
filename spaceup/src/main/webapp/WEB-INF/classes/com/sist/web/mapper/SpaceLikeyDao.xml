@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sist.web.dao.SpaceLikeyDao">
+	<!-- 공간 좋아요 resultMap -->
+	<resultMap type="com.sist.web.model.SpaceLikey" id="spaceLikeyMap">
+		<id column="GUEST_EMAIL" property="guestEmail"></id>
+		<result column="SPACE_ID" property="spaceId"></result>
+		<result column="SPACE_NAME" property="spaceName"></result>
+		<result column="HOST_NICKNAME" property="hostNickname"></result>
+		<result column="HOST_EMAIL" property="hostEmail"></result>
+		<result column="SPACE_ADDR" property="spaceAddr"></result>
+		<result column="SPACE_HOURLY_RATE" property="spaceHourlyRate"></result>
+		<result column="SPACE_TYPE" property="spaceType"></result>
+	</resultMap>
+	
+	<!-- 공간 좋아요 리스트 -->
+	<select id="spaceLikeyList" parameterType="com.sist.web.model.SpaceLikey" resultMap="spaceLikeyMap">
+		SELECT GUEST_EMAIL,
+		       SPACE_ID,
+		       SPACE_NAME,
+		       HOST_NICKNAME,
+		       HOST_EMAIL,
+		       SPACE_ADDR,
+		       SPACE_HOURLY_RATE,
+		       SPACE_TYPE
+		  FROM (SELECT ROWNUM AS RNUM,
+		               GUEST_EMAIL,
+		               SPACE_ID,
+		               SPACE_NAME,
+		               HOST_NICKNAME,
+		               HOST_EMAIL,
+		               SPACE_ADDR,
+		               SPACE_HOURLY_RATE,
+		               SPACE_TYPE
+		          FROM (SELECT A.GUEST_EMAIL GUEST_EMAIL,
+		                       A.SPACE_ID SPACE_ID,
+		                       B.SPACE_NAME SPACE_NAME,
+		                       C.HOST_NICKNAME HOST_NICKNAME,
+		                       B.HOST_EMAIL HOST_EMAIL,
+		                       B.SPACE_ADDR SPACE_ADDR,
+		                       B.SPACE_HOURLY_RATE SPACE_HOURLY_RATE,
+		                       B.SPACE_TYPE SPACE_TYPE
+		                  FROM SPACE_LIKEY A, SPACE B, HOST C
+		                 WHERE A.SPACE_ID = B.SPACE_ID
+		                   AND B.HOST_EMAIL = C.HOST_EMAIL
+		                   AND A.GUEST_EMAIL = #{guestEmail}
+		                 ORDER BY A.ROWID DESC))
+		 WHERE RNUM <![CDATA[>=]]> #{startRow}
+		   AND RNUM <![CDATA[<=]]> #{endRow}
+	</select>
+	
+	<!-- 공간 좋아요 총 갯수 -->
+	<select id="spaceLikeyCount" parameterType="com.sist.web.model.SpaceLikey" resultType="long">
+		SELECT COUNT(A.GUEST_EMAIL) AS CNT
+		  FROM SPACE_LIKEY A, SPACE B
+		 WHERE A.SPACE_ID = B.SPACE_ID
+		   AND A.GUEST_EMAIL = #{guestEmail}
+	</select>
+	
+	<!-- 좋아요 등록(인서트) -->
+	<insert id="addLikey" parameterType="com.sist.web.model.SpaceLikey">
+		INSERT INTO SPACE_LIKEY (
+		    GUEST_EMAIL,
+		    SPACE_ID
+		) VALUES (
+		    #{guestEmail},
+		    #{spaceId}
+		)
+	</insert>
+	
+	<!-- 좋아요 취소 -->
+	<delete id="deleteLikey" parameterType="com.sist.web.model.SpaceLikey">
+		DELETE FROM SPACE_LIKEY
+		 WHERE GUEST_EMAIL = #{guestEmail}
+		    AND SPACE_ID = #{spaceId}
+	</delete>
+         
+	<!-- 좋아요 중복체크 -->
+	<select id="checkLikey" parameterType="com.sist.web.model.SpaceLikey" resultType="int">
+		SELECT COUNT(SPACE_ID) AS CNT
+		  FROM SPACE_LIKEY
+		 WHERE GUEST_EMAIL = #{guestEmail}
+		   AND SPACE_ID = #{spaceId}
+	</select>
+	
+	<!-- 한 게시물 당 좋아요 갯수 -->
+	<select id="spaceIdLikeyCount" parameterType="long" resultType="int">
+		SELECT COUNT(SPACE_ID) AS CNT
+		  FROM SPACE_LIKEY
+		 WHERE SPACE_ID = #{spaceId};
+	</select>
+</mapper>

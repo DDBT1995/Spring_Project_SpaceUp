@@ -1,0 +1,325 @@
+header {
+	position: fixed; /* 화면 상단에 고정 */
+	top: 0; /* 상단 위치 */
+	left: 0;
+	z-index: 1000; /* 다른 요소보다 위에 표시 */
+    width: 100%;
+    height: 120px;
+    background-color: white;
+    list-style-type: none;
+    border-bottom: 1px solid rgb(243, 245, 247);
+}
+
+header ul {
+    list-style-type: none;
+}
+
+.headerBox {
+    max-width: 1500px;
+    width: 100%;
+    height: 50px;
+    margin: 10px auto;
+    padding: 50px 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.headerLeft {
+    width: 20%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    background-color: #999;
+}
+
+.headerLeftMenuBox {
+    width: 20%;
+    margin-right: 20px;
+    position: relative;
+    cursor: pointer;
+}
+
+.headerLeftMenuBox > i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -20%);
+}
+
+.headerLeftMenuListBox {
+    width: 250px;
+    max-height: 400px;
+    position: absolute;
+    top: 30px;
+    text-align: center;
+    background-color: white;
+    border: 1px solid #999;
+    border-radius: 10px;
+    font-weight: bold;
+    z-index: 1000;
+    display: none;
+    overflow-y: auto;
+}
+
+.headerLeftMenuListUl > a > li {
+    width: 100%;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 10px;
+    color: #999;
+    transition: all 0.2s;
+}
+
+.headerLeftMenuListUl > a >  li:hover {
+    color: #36BC9B;
+    background-color: #eee;
+}
+
+.headerLeftMenuListBox > div:hover {
+    background-color: #999;
+}
+
+.headerLeftMenuHbg {
+    width: 25px;
+}
+
+.headerLeftLogoBox {
+    width: 80%;
+    height: 100%;
+    position: relative;
+}
+
+.headerLeftLogoLink {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.headerLeftLogoLink img {
+	margin-bottom: 10px;
+}
+
+.headerCenter {
+    width: 100%
+}
+
+.headerSearchInputLabel {
+    position: relative;
+    width: 400px;
+}
+
+.headerSearchInput {
+    width: 50%;
+    padding: 15px 15px;
+    border: 2px solid rgb(163, 163, 163);
+    border-radius: 50px;
+    font-size: 18px;
+    transition: all 0.5s;
+}
+
+.headerSearchInput:focus {
+    width: 100%;
+}
+
+.headerSearchBtn {
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-45%);
+    padding: 6px;
+    border: none;
+    border-radius: 50px;
+    background-color: white;
+}
+
+.headerRight {
+    width: 20%;
+    margin-right: 20px;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 20px;
+    gap: 15px;
+    align-items: center;
+}
+
+.headerRightLogoutBox {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.headerRightLogoutBox > span {
+    color: #36BC9B;
+    margin-right: 10px;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.headerRightLogoutBox > span:hover {
+    color: cadetblue;
+}
+
+.headerRightLoginBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.headerRightLogin span {
+	border-radius: 8px;
+	text-align: center;
+	padding: 5px;
+	color: #36BC9B;
+	font-weight: bold;	
+	margin-right: 10px;
+}
+
+.headerRightLogin a {
+	text-decoration: none;
+}
+
+.headerRightLogin2 span {
+   border-radius: 8px;
+   text-align: center;
+   padding: 5px;
+   color: #006ac2;
+   font-weight: 400;
+   font-size: 15px;
+   font-style: italic;
+   cursor: pointer;
+}
+
+.headerRightLogin2 a {
+	text-decoration: none;
+	color: #ccc;
+}
+
+.headerRightLoginBox > div > img {
+	padding: 3px;
+    width: 50px;
+    height: 50px;
+    border: 0.5px solid #ccc;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+
+.headerRightLoginBox > div {
+    margin-left: 20px;
+}
+
+.headerRightLoginBox i {
+    color: #999;
+    font-size: 25px;
+}
+
+.headerRightUserImg {
+    width: 40px;
+}
+
+.headerUserMenuBox {
+    position: relative;
+}
+
+.headerUserMenu {
+    width: 170px;
+    display: none;
+    position: absolute;
+    background-color: white;
+    border-radius: 8px;
+    border: 1px solid rgb(214, 214, 214);
+    z-index: 1500;
+    margin-top: 20px;
+    left: -20px;
+}
+
+.HRuserId li {
+    color: #36BC9B !important;
+    cursor: default;
+    padding: 8px 30px;
+}
+
+.HRuserId li:hover {
+    
+}
+
+.headerUserMenu ul {
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+    padding: 0px;
+}
+
+.headerUserMenu li {
+    padding: 10px 15px;
+    transition: all 0.3s;
+    color: #72787f;
+    padding: 8px 30px;
+}
+
+.headerUserMenu li:hover {
+    background-color: #e7eaee;
+    color: #3b3e4d;
+}
+
+.userMenuHr {
+   width: 162px;
+   color: #dfe2e7;
+}
+
+.headerUserMenu a {
+    text-decoration: none;
+}
+
+/* 삼각형 (화살표) */
+.triangle {
+    top: -6px;
+    width: 10px;
+    left: 30px;
+    height: 10px;
+    border-top: 1px solid rgb(214, 214, 214);
+    border-left: 1px solid rgb(214, 214, 214);
+    border-bottom: rgb(255, 255, 255);
+    background-color: rgb(255, 255, 255);
+    transform: rotate(45deg);
+    position: absolute;
+    z-index: 1001;
+    pointer-events: none;
+}
+
+.gbZxlb {
+    position: relative;
+    width: 492px;
+}
+
+.bZbpPt {
+    display: initial;
+}
+
+.jIQesR {
+    width: 100%;
+    height: 48px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    gap: 8px;
+    border-radius: 24px;
+    padding-left: 16px;
+    padding-right: 15px;
+    background-color: #f5f6f8
+}
+
+.hSdaIa {
+    width: 100%;
+    flex: 1 1 0%;
+    font-family: Regular, sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    color: rgb(36, 36, 36);
+    letter-spacing: -0.64px;
+}

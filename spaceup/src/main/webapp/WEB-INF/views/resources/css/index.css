@@ -1,0 +1,210 @@
+  /* 기본 설정 */
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* 공통 섹션 스타일 */
+        .section {
+            position: relative;
+            opacity: 0;
+            /* 초기 숨김 */
+            transform: none;
+            /* translateY 초기화 */
+            will-change: opacity, transform;
+            /* 브라우저 최적화 */
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: none;
+            /* 애니메이션 완료 후에도 translateY 영향 없음 */
+        }
+
+        /* section1: 첫 번째 섹션 */
+        #section1 {
+            height: 100vh;
+            background-color: rgba(255, 255, 255, 0.5);
+            background-image: url('/resources/images/index/section1_background.jpg');
+            display: grid;
+            color: white;
+            align-items: center;
+            justify-items: center;
+            align-content: center;
+        }
+
+        #section1::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.1);
+            z-index: 1;
+        }
+
+        #section1_logo {
+            background-image: url('/resources/images/logo/largelogo.png');
+            z-index: 1;
+            width: 200px;
+            height: 100px;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+        }
+
+        #section1>p {
+            font-size: 4rem;
+            font-weight: 1000;
+        }
+        
+        .scroll-down {
+            position: absolute;
+            bottom: 50px;
+            width: 100%;
+            text-align: center;
+            color: black;
+            font-size: 28px;
+            animation: fadeIn 2s infinite;
+        }
+
+        .scroll-down span {
+            display: block;
+            font-size: 32px;
+            margin-top: 10px;
+            animation: bounce 1.5s infinite;
+        }
+
+        @keyframes fadeIn {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+        }
+
+        /* section2: 두 번째 섹션 */
+        #section2 {
+            height: 100vh;
+            background-color: #FAF3E0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .main-container {
+            display: flex;
+            flex-wrap: wrap;
+            width: 90%;
+            height: 95vh;
+            gap: 20px;
+        }
+
+        .category {
+            flex: 1 1 calc(50% - 10px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            text-align: center;
+            color: white;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+            opacity: 1;
+            animation: fadeIn 1s ease-out forwards;
+            transform: translateY(20px);
+        }
+
+        .category:hover {
+            transform: scale(1.05) translateY(0);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+            opacity: 0.9;
+        }
+
+        .popup {
+            background-image: url('/resources/images/index/index1.jpg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+        }
+
+        .studio {
+            background-image: url('/resources/images/index/index2.jpg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+        }
+
+        .party {
+            background-image: url('/resources/images/index/index3.jpg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+        }
+
+        .exercise {
+            background-image: url('/resources/images/index/index4.jpg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .chat-bubble {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: white;
+            border-radius: 20px;
+            padding: 10px 20px;
+            margin: 10px 0;
+            text-align: center;
+            display: inline-block;
+            font-size: 1rem;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .time {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        .fas {
+            font-size: 25px;
+        }
+
+        @media (max-width: 768px) {
+            .category {
+                flex: 1 1 100%;
+            }
+
+            .main-container {
+                height: auto;
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }

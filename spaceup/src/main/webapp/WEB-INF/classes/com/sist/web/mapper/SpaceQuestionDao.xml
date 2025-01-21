@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC " -//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.sist.web.dao.SpaceQuestionDao">
+	
+	<resultMap type="com.sist.web.model.SpaceQuestion" id="spaceQuestionResultMap">
+	    <id column="SPACE_QUESTION_ID" property="spaceQuestionId" />
+	    <result column="GUEST_EMAIL" property="guestEmail" />
+	    <result column="SPACE_ID" property="spaceId" />
+	    <result column="QUESTION_CONTENT" property="questionContent" />
+	    <result column="QUESTION_CATEGORY" property="questionCategory" />
+	    <result column="STATUS" property="status" />
+	    <result column="REG_DATE" property="regDate" />
+	    <result column="MODI_DATE" property="modiDate" />
+	    <result column="DEL_DATE" property="delDate" />
+	    <result column="SPACE_NAME" property="spaceName" />
+	    <result column="SPACE_TIP" property="spaceTip" />
+	    <result column="SPACE_TYPE" property="spaceType" />
+	</resultMap>
+	
+	<select id="selectSpaceQuestionByGuest" parameterType="com.sist.web.model.SpaceQuestion" resultMap="spaceQuestionResultMap">
+	    SELECT 
+		    SPACE_QUESTION_ID,
+		    GUEST_EMAIL,
+		    SPACE_ID,
+		    QUESTION_CONTENT,
+		    QUESTION_CATEGORY,
+		    STATUS,
+		    REG_DATE,
+		    MODI_DATE,
+		    DEL_DATE,
+		    SPACE_NAME,
+		    SPACE_TIP,
+		    SPACE_TYPE
+		FROM(SELECT
+		        ROWNUM AS RNUM,
+		        SPACE_QUESTION_ID,
+		        GUEST_EMAIL,
+		        SPACE_ID,
+		        QUESTION_CONTENT,
+		        QUESTION_CATEGORY,
+		        STATUS,
+		        REG_DATE,
+		        MODI_DATE,
+		        DEL_DATE,
+		        SPACE_NAME,
+		        SPACE_TIP,
+		        SPACE_TYPE
+		     FROM (SELECT
+		            SQ.SPACE_QUESTION_ID SPACE_QUESTION_ID,
+		            NVL(SQ.GUEST_EMAIL, '') GUEST_EMAIL,
+		            NVL(SQ.SPACE_ID, 0) SPACE_ID,
+		            NVL(SQ.QUESTION_CONTENT, '') QUESTION_CONTENT,
+		            NVL(SQ.QUESTION_CATEGORY, 0) QUESTION_CATEGORY,
+		            NVL(SQ.STATUS, '') STATUS,
+		            NVL(TO_CHAR(SQ.REG_DATE, 'YYYY.MM.DD HH24:MI:SS'), '') REG_DATE,
+		            NVL(TO_CHAR(SQ.MODI_DATE, 'YYYY.MM.DD HH24:MI:SS'), '') MODI_DATE,
+		            NVL(TO_CHAR(SQ.DEL_DATE, 'YYYY.MM.DD HH24:MI:SS'), '') DEL_DATE,
+		            NVL(S.SPACE_NAME, '') SPACE_NAME,
+		            NVL(S.SPACE_TIP, '') SPACE_TIP,
+		            NVL(S.SPACE_TYPE, '') SPACE_TYPE
+		        FROM
+		            SPACE_QUESTION SQ, SPACE S
+		        WHERE
+		            GUEST_EMAIL = #{guestEmail}
+		        AND
+		            SQ.SPACE_ID=S.SPACE_ID
+		        ORDER BY SQ.SPACE_QUESTION_ID DESC
+		        )    
+		    )
+		WHERE RNUM <![CDATA[>=]]>
+		#{startRow}
+		AND RNUM <![CDATA[<=]]>
+		#{endRow}
+	</select>
+	
+	<select id="spaceQuestionListCount" parameterType="String" resultType="int">
+		SELECT
+		    COUNT(SPACE_QUESTION_ID)
+		FROM
+		    SPACE_QUESTION
+		WHERE
+		    GUEST_EMAIL = #{VALUE}
+	</select>
+	
+	
+	
+	
+
+</mapper>

@@ -1,0 +1,225 @@
+header {
+	position: fixed; /* 화면 상단에 고정 */
+	top: 0; /* 상단 위치 */
+	left: 0;
+	z-index: 1000; /* 다른 요소보다 위에 표시 */
+    width: 100%;
+    height: 120px;
+    background-color: white;
+    list-style-type: none;
+}
+
+header ul {
+    list-style-type: none;
+}
+
+.headerBox {
+    max-width: 1200px;
+    height: 50px;
+    margin: auto;
+    padding: 50px 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.headerLeft {
+    width: 20%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    background-color: #999;
+}
+
+.headerLeftMenuBox {
+    width: 20%;
+    margin-right: 20px;
+    position: relative;
+    cursor: pointer;
+}
+
+.headerLeftMenuBox > i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -20%);
+}
+
+.headerLeftMenuListBox {
+    width: 250px;
+    max-height: 400px;
+    position: absolute;
+    top: 30px;
+    text-align: center;
+    background-color: white;
+    border: 1px solid #999;
+    border-radius: 10px;
+    font-weight: bold;
+    z-index: 1000;
+    display: none;
+    overflow-y: auto;
+}
+
+.headerLeftMenuListUl > a > li {
+    width: 100%;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 10px;
+    color: #999;
+    transition: all 0.2s;
+}
+
+.headerLeftMenuListUl > a >  li:hover {
+    color: #36BC9B;
+    background-color: #eee;
+}
+
+.headerLeftMenuListBox > div:hover {
+    background-color: #999;
+}
+
+.headerLeftMenuHbg {
+    width: 25px;
+}
+
+.headerLeftLogoBox {
+    width: 80%;
+    height: 100%;
+    position: relative;
+}
+
+.headerLeftLogoLink {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.headerLeftLogoLink img {
+    margin-top: 20px;
+    width: 180px;
+    height: 160px;
+}
+
+.headerCenter {
+    width: 30%;
+}
+
+.headerSearchInputLabel {
+    position: relative;
+    width: 400px;
+}
+
+.headerSearchInput {
+    width: 50%;
+    padding: 15px 15px;
+    border: 2px solid rgb(163, 163, 163);
+    border-radius: 50px;
+    font-size: 18px;
+    transition: all 0.5s;
+}
+
+.headerSearchInput:focus {
+    width: 100%;
+}
+
+.headerSearchBtn {
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-45%);
+    padding: 6px;
+    border: none;
+    border-radius: 50px;
+    background-color: white;
+}
+
+.headerRight {
+    width: 20%;
+    margin-right: 20px;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 20px;
+}
+
+.headerRightLogoutBox {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.headerRightLogoutBox > span {
+    color: #36BC9B;
+    margin-right: 10px;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.headerRightLogoutBox > span:hover {
+    color: cadetblue;
+}
+
+.headerRightLoginBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.headerRightLoginBox > div > img {
+    cursor: pointer;
+}
+
+.headerRightLoginBox > div {
+    margin-left: 20px;
+}
+
+.headerRightLoginBox i {
+    color: #999;
+    font-size: 25px;
+}
+
+.headerRightUserImg {
+    width: 30px;
+}
+
+.headerUserMenuBox {
+    position: relative;
+}
+
+.headerUserMenu {
+    width: 180px;
+    display: none;
+    position: absolute;
+    color: #999;
+    background-color: white;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    z-index: 1500;
+}
+
+.HRuserId li {
+    color: #36BC9B !important;
+    cursor: default;
+}
+
+.HRuserId li:hover {
+    background-color: white !important;
+}
+
+.headerUserMenu ul {
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+}
+
+.headerUserMenu li {
+    padding: 10px 15px;
+    transition: all 0.3s;
+    color: #999;
+}
+
+.headerUserMenu li:hover {
+    background-color: #999;
+    color: white;
+}

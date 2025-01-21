@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC " -//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.sist.web.dao.SpaceAnswerDao">
+	
+	<resultMap type="com.sist.web.model.SpaceAnswer" id="spaceAnswewrResultMap">
+	    <id column="SPACE_ANSWER_ID" property="spaceAnswerId" />
+	    <result column="SPACE_QUESTION_ID" property="spaceQuestionId" />
+	    <result column="HOST_EMAIL" property="hostEmail" />
+	    <result column="ANSWER_CONTENT" property="answerContent" />
+	    <result column="STATUS" property="status" />
+	    <result column="REG_DATE" property="regDate" />
+	    <result column="MODI_DATE" property="modiDate" />
+	    <result column="DEL_DATE" property="delDate" />
+	    <result column="HOST_NICKNAME" property="hostNickname" />
+	</resultMap>
+	
+	<select id="selectSpaceAnswerByQuestionId" parameterType="long" resultMap="spaceAnswewrResultMap">
+		SELECT
+		    NVL(S.SPACE_ANSWER_ID, 0) AS SPACE_ANSWER_ID,
+		    NVL(S.SPACE_QUESTION_ID, 0) AS SPACE_QUESTION_ID,
+		    NVL(S.HOST_EMAIL, '') AS HOST_EMAIL,
+		    NVL(S.ANSWER_CONTENT, '') AS ANSWER_CONTENT,
+		    NVL(S.STATUS, '') AS STATUS,
+		    NVL(TO_CHAR(S.REG_DATE, 'YYYY.MM.DD HH24:MI:SS'), '') AS REG_DATE,
+		    NVL(TO_CHAR(S.MODI_DATE, 'YYYY.MM.DD HH24:MI:SS'), '') AS MODI_DATE,
+		    NVL(TO_CHAR(S.DEL_DATE, 'YYYY.MM.DD HH24:MI:SS'), '') AS DEL_DATE,
+		    NVL(H.HOST_NICKNAME, '') AS HOST_NICKNAME
+		FROM
+		    SPACE_ANSWER S, HOST H
+		WHERE 
+		    S.SPACE_QUESTION_ID = #{value}
+		AND
+			S.HOST_EMAIL = H.HOST_EMAIL
+	</select>
+	
+	
+	
+	
+
+</mapper>

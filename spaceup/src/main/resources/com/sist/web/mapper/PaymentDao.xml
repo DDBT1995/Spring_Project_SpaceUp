@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC " -//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.sist.web.dao.PaymentDao">
+	
+	<resultMap type="com.sist.web.model.Payment" id="paymentResultMap">
+	    <id column="PAYMENT_ID" property="paymentId"/>
+	    <result column="RESERVATION_ID" property="reservationId"/>
+	    <result column="PAYMENT_METHOD" property="paymentMethod"/>
+	    <result column="STATUS" property="status"/>
+	    <result column="REG_DATE" property="regDate"/>
+	    <result column="DEL_DATE" property="delDate"/>
+	    <result column="AMOUNT" property="amount"/>
+	    <result column="KAKAO_TID" property="kakaoTid"/>
+	</resultMap>
+
+	
+	<select id="paymentSelectByReservationId" parameterType="long" resultMap="paymentResultMap">
+		SELECT
+		    NVL(PAYMENT_ID, 0) AS PAYMENT_ID,
+		    NVL(RESERVATION_ID, 0) AS RESERVATION_ID,
+		    NVL(PAYMENT_METHOD, '') AS PAYMENT_METHOD,
+		    NVL(STATUS, '') AS STATUS,
+		    NVL(TO_CHAR(REG_DATE, 'YYYY.MM.DD HH24:MI:SS'), '') AS REG_DATE,
+		    NVL(TO_CHAR(DEL_DATE, 'YYYY.MM.DD HH24:MI:SS'), '') AS DEL_DATE,
+		    NVL(AMOUNT, 0) AS AMOUNT,
+		    NVL(KAKAO_TID, '') AS KAKAO_TID
+		FROM
+		    PAYMENT
+		WHERE
+		    RESERVATION_ID = #{value}
+	</select>
+	
+	<insert id="paymentInsert" parameterType="com.sist.web.model.Payment">
+  	<!-- 선행처리기(시퀀스 조회) -->
+  	<selectKey resultType="long" keyProperty="paymentId" order="BEFORE">
+  		SELECT SEQ_PAYMENT_ID.NEXTVAL FROM DUAL
+  	</selectKey>
+  		INSERT INTO PAYMENT (
+            PAYMENT_ID,
+            RESERVATION_ID,
+            PAYMENT_METHOD,
+            STATUS,
+            REG_DATE,
+            DEL_DATE,
+            AMOUNT,
+            KAKAO_TID
+		) VALUES (
+		    #{paymentId},
+		    #{reservationId},
+		    #{paymentMethod},
+		    #{status},
+		    SYSDATE,
+		    #{delDate},
+		    #{amount},
+		    #{kakaoTid}
+		)
+  </insert>
+  
+  <!-- 결제정보 전체 select -->
+  <select id="paymentSelect" parameterType="long" resultMap="paymentResultMap">
+	  	SELECT PAYMENT_ID,
+		        RESERVATION_ID,
+		        PAYMENT_METHOD,
+		        STATUS,
+		        REG_DATE,
+		        DEL_DATE,
+		        AMOUNT,
+		        KAKAO_TID
+		FROM PAYMENT
+		WHERE PAYMENT_ID = #{value}
+  </select>
+  
+  <!-- 결제취소 UPDATE -->
+  <update id="paymentCancel" parameterType="long">
+  	UPDATE PAYMENT
+	   SET DEL_DATE = SYSDATE,
+	       STATUS = 'N'
+	 WHERE PAYMENT_ID = #{value}
+  </update>
+  
+	
+	
+</mapper>

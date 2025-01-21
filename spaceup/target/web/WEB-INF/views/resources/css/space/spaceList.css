@@ -1,0 +1,338 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.spaceList {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Noto Sans KR', 'Roboto', Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+    background-color: #f8f9fa;
+}
+
+.spaceList h1, h2, h3, p, span {
+    font-family: 'Pretendard', 'Roboto', sans-serif;
+    font-weight: bold;
+}
+
+.spaceList h1, h2, h3, span {
+    margin-bottom: 1rem;
+
+}
+
+.spaceList a {
+    text-decoration-line: none;
+}
+
+.modalShadowBox {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1100;
+}
+
+.modalMouse {
+    overflow: hidden;
+}
+
+.toTopBtn {
+    padding: 10px 15px;
+    font-size: 16px;
+    background-color: #36BC9B;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+    transition: opacity 0.3s ease;
+}
+
+.toTopBtn:hover {
+    background-color: #333;
+}
+
+.spaceListMain {
+    width: 1200px;
+    margin: auto;
+    margin-top: 200px;
+}
+
+.mainSearchBox {
+    position: relative;
+    height: 100px;
+    margin-top: 80px;
+    border: 3px solid #36BC9B;
+    border-radius: 100px;
+}
+
+.mainSearchBtnBox {
+    position: absolute;
+    top: -50px;
+    right: 30px;
+}
+
+.mainSearchSearchBtn {
+    background-color: #36BC9B;
+    color: #eee;
+    font-size: 15px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    padding: 8px 10px;
+}
+
+.mainSearchSearchBtn:hover {
+    color: white;
+    background-color: #333;
+}
+
+.mainSearchResetBtn {
+    background-color: burlywood;
+    color: #eee;
+    font-size: 15px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    padding: 8px 10px;
+}
+
+.mainSearchResetBtn:hover {
+    color: white;
+    background-color: #333;
+}
+
+.mainSearch {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mainSearch {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mainSearch > div {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    flex: 1;
+    padding-left: 30px;
+    color: rgb(163, 163, 163);
+    border-radius: 100px;
+    transition: all 0.5s;
+    position: relative;
+}
+
+.mainSearchLocalInput, .mainSearchPlaceInput {
+    width: 500px;
+    padding: 20px;
+    position: absolute;
+    bottom: -90px;
+    background-color: #333;
+    border-radius: 5px;
+    z-index: 1200;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-gap: 8px;
+}
+
+.localItem, .placeItem {
+    border: 2px solid white;
+    border-radius: 10px;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+}
+
+.localItem:hover, .placeItem:hover {
+    color: black;
+    background-color: white;
+}
+
+.mainSearchPeople {
+    position: relative;
+}
+
+.mainSearchPeopleInput {
+    width: 400px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    bottom: -220px;
+    left: -80px;
+    background-color: #333;
+    padding: 40px;
+    border-radius: 10px;
+    z-index: 1200;
+}
+
+.peopleBox {
+    width: 100%;
+    margin: 0px auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.quantity {
+    padding: 15px;
+}
+
+.peopleMinus, .peoplePlus {
+    padding: 15px 20px;
+    border-radius: 100px;
+    cursor: pointer;
+}
+
+.peopleSelect {
+    margin-top: 40px;
+    padding: 10px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.mainSearchDate {
+    position: relative;
+}
+
+.mainSearchDateInput {
+    bottom: -650px;
+    left: -400px;
+    position: absolute;
+    width: 800px;
+    background-color: white;
+    z-index: 1200;
+}
+
+.mainSearchItemDateInput, .mainSearchItemPeopleInput, .mainSearchItemPlaceInput, .mainSearchInput {
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.mainSearchSelect {
+    display: none;
+}
+
+.mainSearch > div:hover {
+    background-color: #eee;
+}
+
+/* sorting */
+
+.spaceListSelectBox {
+    margin: 25px 0px 25px 0px;
+    padding: 0px 30px;
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+}
+
+.spaceListTotalCntBox {
+    margin-left: 5px;
+}
+
+.spaceListTotalCnt {
+    color: #36BC9B;
+}
+
+.spaceListSelect {
+    border: none;
+    background-color: #F8F9FA;
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+.spaceListSelect:focus {
+    border: 1px solid #36BC9B;
+    border-radius: 5px;
+}
+
+.spaceListSelect option {
+    font-weight: bold;
+}
+
+/* list */
+
+.mainContentTitle {
+    color: #36BC9B !important;
+    margin: 50px 0px 20px 30px;
+}
+
+.mainContentsBox {
+    padding: 0px 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 15px;
+}
+
+.mainItemCard {
+    height: 450px;
+    display: flex;
+    flex-direction: column;
+}
+
+.mainItemCard > img {
+    width: 100%;
+    height: 70%;
+    border-radius: 5px;
+    object-fit: contain;
+}
+
+.mainItemCardScript {
+    width: 100%;
+    height: 30%;
+    left: 0px;
+    bottom: 0px;
+    color: #333;
+    padding: 20px 0px 0px 5px;
+}
+
+.mainItemCardScriptTop {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 10px;
+}
+
+.CardScriptTopRight img {
+    vertical-align: top;
+}
+
+.ttt {
+	display: flex;
+	justify-content: center;
+	alighn-item: center;
+	
+}
+
+.mainItemMoreBtn {
+    margin-top: 40px;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 10px;
+    color: #eee;
+    background-color: #36BC9B;
+    font-size: 20px;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.mainItemMoreBtn:hover {
+    background-color: violet;
+}
